@@ -1,0 +1,800 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1CBC629B-9DAC-4B95-B9B6-77F2FF5088B0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GardeningGame</RootNamespace>
+    <AssemblyName>GardeningGame</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MonoGamePlatform>Windows</MonoGamePlatform>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\$(MonoGamePlatform)\$(Platform)\$(Configuration)\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>GardeningGame.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Engine\Scenes\GameScene\Draw.cs" />
+    <Compile Include="Engine\Scenes\GameScene\GameScene.cs" />
+    <Compile Include="Engine\Scenes\GameScene\Update.cs" />
+    <Compile Include="Engine\Scenes\Scene.cs" />
+    <Compile Include="Engine\GameEngine\UI\SwingingSelector.cs" />
+    <Compile Include="Engine\GameEngine\UI\ButonState.cs" />
+    <Compile Include="Engine\GameEngine\UI\Elements\Button.cs" />
+    <Compile Include="Engine\GameEngine\UI\Elements\Element.cs" />
+    <Compile Include="Engine\GameEngine\UI\Elements\HelpButton.cs" />
+    <Compile Include="Engine\GameEngine\UI\UIText\UIElement.cs" />
+    <Compile Include="Engine\GameEngine\UI\UIText\UIFrame.cs" />
+    <Compile Include="Engine\GameEngine\UI\UserInterface.cs" />
+    <Compile Include="Engine\GameEngine\Entities\FlowerBush.cs" />
+    <Compile Include="Engine\GameEngine\Entities\Reed.cs" />
+    <Compile Include="Engine\GameEngine\Terrain\DirtPatch.cs" />
+    <Compile Include="Engine\GameEngine\Terrain\Terrain.cs" />
+    <Compile Include="Engine\GameEngine\Terrain\Water.cs" />
+    <Compile Include="Engine\GameEngine\Camera.cs" />
+    <Compile Include="Engine\Main.cs" />
+    <Compile Include="Engine\GameEngine\Entities\Bush.cs" />
+    <Compile Include="Engine\GameEngine\Entities\Entity.cs" />
+    <Compile Include="Engine\GameEngine\Entities\Flower.cs" />
+    <Compile Include="Engine\GameEngine\Entities\Shrub.cs" />
+    <Compile Include="Engine\GameEngine\Utilities\DeprecatedUtilities.cs" />
+    <Compile Include="Engine\GameEngine\Utilities\GameSceneVariables.cs" />
+    <Compile Include="Engine\GameEngine\Utilities\MeshTag.cs" />
+    <Compile Include="Engine\GameEngine\PlantTile.cs" />
+    <Compile Include="Engine\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Engine\GameEngine\Utilities\Utils.cs" />
+    <Compile Include="Engine\GameEngine\Utilities\VertexPositionColorNormal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Extended, Version=1.0.617.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Extended.1.0.617\lib\portable-net45+win8+wpa81\MonoGame.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\UI\NotFound.png" />
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="Content\Content.mgcb" />
+    <None Include="app.config" />
+    <None Include="app.manifest" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_l_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_l_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_l_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_l_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_l_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_m_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_a_m_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_l_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_l_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_l_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_l_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_l_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_b_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_c_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_c_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_d_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_d_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_e_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_e_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_f_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_f_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_f_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_f_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_f_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_g_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_g_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_g_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_g_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_g_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_h_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_h_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_h_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_h_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_h_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_h_m_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Bush_h_m_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_BT_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_BT_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_BT_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_BT_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_BT_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_a_m_BT_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_BT_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_BT_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_BT_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_BT_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_BT_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_b_m_BT_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_c_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_c_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_c_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_c_m_BT_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_c_m_BT_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_c_m_BT_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_BT_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_BT_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_BT_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_BT_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_BT_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_l_BT_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_BT_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_BT_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_BT_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_BT_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_BT_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Cactus_s_BT_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_a_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_a_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_a_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_a_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_a_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_b_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_b_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_b_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_b_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Dead_Bush_b_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_l_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_l_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_l_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_l_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_l_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_m_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_a_m_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_l_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_l_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_l_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_l_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_l_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_b_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_c_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_c_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_d_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_d_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_e_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_e_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_f_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_f_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_f_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_f_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_f_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_g_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_g_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_g_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_g_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_g_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_h_m_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_h_m_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_h_m_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_h_m_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_h_m_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_h_m_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\FlowerBush_h_m_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_OneS_11.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_a_TwoS_11.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_OneS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_b_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_11.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_12.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_13.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_14.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_15.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_OneS_16.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_11.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_12.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_13.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_14.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_15.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_c_TwoS_16.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_OneS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_d_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_OneS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_e_TwoS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_11.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Flower_f_TwoS_12.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_a_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass3D_b_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_a_TwoS_11.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlanes_b_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_01.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_02.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_03.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_04.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_05.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_a_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_01.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_02.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_03.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_04.psd" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\GrassPlane_b_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_a_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_b_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_c_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_d_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_e_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_f_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_g_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Grass_h_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_a_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_a_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_a_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_a_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_a_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_a_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_b_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_b_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_b_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_b_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_b_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_b_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_c_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_c_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_c_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_c_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_c_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_c_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_d_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_d_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_d_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_d_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_d_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_d_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_e_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_f_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_g_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_g_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_g_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_h_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_h_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_h_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_h_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_h_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_i_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_j_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_j_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_j_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Mushroom_k_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_a_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_b_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_c_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_c_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_c_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_c_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_c_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_c_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_d_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_e_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_f_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_g_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_h_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_OneS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_i_TwoS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_OneS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_07.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_08.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_09.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_j_TwoS_10.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_OneS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_OneS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_OneS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_OneS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_OneS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_TwoS_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_TwoS_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_TwoS_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_TwoS_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Plant_k_TwoS_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_a_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_a_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_a_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_a_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_a_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_a_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_b_01.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_b_02.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_b_03.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_b_04.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_b_05.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_b_06.fbx" />
+    <None Include="Content\Low Poly Vegetation Pack\Reed_b_0d5.fbx" />
+    <None Include="Content\UI\Arial.spritefont" />
+    <None Include="Content\UI\arial.ttf" />
+    <None Include="Content\UI\arialbd.ttf" />
+    <None Include="Content\UI\arialbi.ttf" />
+    <None Include="Content\UI\ariali.ttf" />
+    <None Include="Content\UI\Arial_Bold.spritefont" />
+    <None Include="Content\UI\Arial_Italic.spritefont" />
+    <None Include="Content\UI\Arial_Large.spritefont" />
+    <None Include="Content\UI\Arial_Small.spritefont" />
+    <None Include="Content\UI\ariblk.ttf" />
+    <None Include="packages.config" />
+    <None Include="VegitationPack.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
