@@ -11,6 +11,7 @@ using System.IO;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using static GardeningGame.Engine.Scenes.Game.GameSceneVariables;
+using GardeningGame.Engine.Scenes.Common;
 
 namespace GardeningGame.Engine.Scenes.Game
 {
@@ -123,7 +124,7 @@ namespace GardeningGame.Engine.Scenes.Game
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            SmartGardenCamera.Initialize(Graphics.GraphicsDevice);
+            Common.SmartGardenCamera.Initialize(Graphics.GraphicsDevice, 1200);
 
             Graphics.GraphicsDevice.Clear(GameSceneVariables.clearColor);
         }

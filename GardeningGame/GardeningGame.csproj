@@ -64,9 +64,14 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Scenes\Common\Debug.cs" />
+    <Compile Include="Engine\Scenes\Common\Extensions.cs" />
     <Compile Include="Engine\Scenes\GameScene\Draw.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameScene.cs" />
     <Compile Include="Engine\Scenes\GameScene\Update.cs" />
+    <Compile Include="Engine\Scenes\LevelScene\Draw.cs" />
+    <Compile Include="Engine\Scenes\LevelScene\LevelSelectScene.cs" />
+    <Compile Include="Engine\Scenes\LevelScene\Update.cs" />
     <Compile Include="Engine\Scenes\Scene.cs" />
     <Compile Include="Engine\GameEngine\UI\SwingingSelector.cs" />
     <Compile Include="Engine\GameEngine\UI\ButonState.cs" />
@@ -81,7 +86,7 @@
     <Compile Include="Engine\GameEngine\Terrain\DirtPatch.cs" />
     <Compile Include="Engine\GameEngine\Terrain\Terrain.cs" />
     <Compile Include="Engine\GameEngine\Terrain\Water.cs" />
-    <Compile Include="Engine\GameEngine\Camera.cs" />
+    <Compile Include="Engine\Scenes\Common\Camera.cs" />
     <Compile Include="Engine\Main.cs" />
     <Compile Include="Engine\GameEngine\Entities\Bush.cs" />
     <Compile Include="Engine\GameEngine\Entities\Entity.cs" />
@@ -93,7 +98,7 @@
     <Compile Include="Engine\GameEngine\PlantTile.cs" />
     <Compile Include="Engine\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Engine\GameEngine\Utilities\Utils.cs" />
+    <Compile Include="Engine\Scenes\Common\Utils.cs" />
     <Compile Include="Engine\GameEngine\Utilities\VertexPositionColorNormal.cs" />
   </ItemGroup>
   <ItemGroup>

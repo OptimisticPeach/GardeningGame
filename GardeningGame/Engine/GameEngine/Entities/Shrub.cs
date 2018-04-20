@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using GardeningGame.Engine.Scenes.Common;
 
 namespace GardeningGame.Engine.Scenes.Game.Entities
 {

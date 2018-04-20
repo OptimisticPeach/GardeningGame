@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using GardeningGame.Engine.Scenes.Game.UI;
 using System.Diagnostics;
+using GardeningGame.Engine.Scenes.Common;
 
 namespace GardeningGame.Engine.Scenes.Game
 {

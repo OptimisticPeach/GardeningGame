@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using GardeningGame.Engine.Scenes.Common;
 
 namespace GardeningGame.Engine.Scenes.Game.UI
 {

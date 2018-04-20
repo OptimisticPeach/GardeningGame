@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GardeningGame.Engine.Scenes.Game
+namespace GardeningGame.Engine.Scenes.Common
 {
 
     public static class SmartGardenCamera
@@ -14,7 +14,7 @@ namespace GardeningGame.Engine.Scenes.Game
         public static int Width;
         public static int Height;
 
-        public const float radius = 400;
+        public static float radius = 400;
 
         static SmartGardenCamera()
         {
@@ -22,8 +22,9 @@ namespace GardeningGame.Engine.Scenes.Game
             //Position -= new Vector3(1800, 0, 0);
         }
 
-        public static void Initialize(GraphicsDevice gd)
+        public static void Initialize(GraphicsDevice gd, float radius)
         {
+            SmartGardenCamera.radius = radius;
             Width = gd.PresentationParameters.BackBufferWidth;
             Height = gd.PresentationParameters.BackBufferHeight;
             var Max = Math.Max(Width, Height);
@@ -43,9 +44,9 @@ namespace GardeningGame.Engine.Scenes.Game
         {
             double x, y, z;
             double angle = MathHelper.ToRadians((rotation) * 45);
-            x = 1200 * Math.Cos(angle);
+            x = radius * Math.Cos(angle);
             y = 1400;
-            z = 1200 * Math.Sin(angle);
+            z = radius * Math.Sin(angle);
             Position = new Vector3((float)x, (float)y, (float)z);
         }
 

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using GardeningGame.Engine.Scenes.Common;
 
 namespace GardeningGame.Engine.Scenes.Game
 {
@@ -37,11 +38,11 @@ namespace GardeningGame.Engine.Scenes.Game
                 Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             if (Selector != null)
                 Selector.Draw(SmartGardenCamera.spriteBatch);
-            if (GameSceneVariables.DEBUG)
+            if (Debug.DEBUG)
             {
                 SmartGardenCamera.spriteBatch.DrawString(UI.UIText.UIFrame.fonts[(int)UI.UIText.UIElement.Font.Arial],
                     String.Format(
-                        GameSceneVariables.Debugstring,
+                        Debug.Debugstring,
                         SmartGardenCamera.Position.X,
                         SmartGardenCamera.Position.Y,
                         SmartGardenCamera.Position.Z,

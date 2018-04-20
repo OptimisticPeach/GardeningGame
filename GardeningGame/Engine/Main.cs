@@ -21,7 +21,8 @@ namespace GardeningGame.Engine
     {
         GraphicsDeviceManager Graphics;
 
-        Scenes.Game.GameScene GameScene = new Scenes.Game.GameScene();
+        //Scenes.Game.GameScene GameScene = new Scenes.Game.GameScene();
+        Scenes.LevelSelect.LevelSelectScene GameScene = new Scenes.LevelSelect.LevelSelectScene();
 
         public Gardening()
         {
@@ -65,6 +66,10 @@ namespace GardeningGame.Engine
         protected override void LoadContent()
         {
             GameScene.LoadContent(Content);
+            if (Scenes.Debug.DEBUG)
+            {
+                Scenes.Debug.DebugFont = Content.Load<SpriteFont>("UI\\arial");
+            }
         }
 
         /// <summary>
