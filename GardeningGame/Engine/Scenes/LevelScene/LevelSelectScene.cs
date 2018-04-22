@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using static GardeningGame.Engine.Scenes.Game.GameSceneVariables;
 using GardeningGame.Engine.Scenes.Common;
+using MonoGame.Extended;
 
 namespace GardeningGame.Engine.Scenes.LevelSelect
 {
@@ -26,6 +27,8 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
         RenderTarget2D SelectionBackBuffer;
         RenderTarget2D ScreenBackBuffer;
         bool ScreenOrSelection = false;
+
+        VertexBuffer DirectionalLines;
 
         Model LTree { get; set; }
 
@@ -75,7 +78,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 2000);
+            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 2000, 100);
 
             Graphics.GraphicsDevice.Clear(Color.AliceBlue);
 
@@ -101,6 +104,19 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 }
             }
 
+            List<VertexPositionColor> Lines = new List<VertexPositionColor>();
+
+            Lines.Add(new VertexPositionColor(new Vector3(40000, 0, 0), Color.Red));
+            Lines.Add(new VertexPositionColor(new Vector3(-40000, 0, 0), Color.DarkRed));
+            Lines.Add(new VertexPositionColor(new Vector3(0, 40000, 0), Color.Green));
+            Lines.Add(new VertexPositionColor(new Vector3(0, -40000, 0), Color.DarkGreen));
+            Lines.Add(new VertexPositionColor(new Vector3(0, 0, 40000), Color.Blue));
+            Lines.Add(new VertexPositionColor(new Vector3(0, 0, -40000), Color.DarkBlue));
+
+            DirectionalLines = new VertexBuffer(Graphics.GraphicsDevice, typeof(VertexPositionColor), 6, BufferUsage.WriteOnly);
+            DirectionalLines.SetData(Lines.ToArray());
+
+            RotatingCam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
         }
 
 
@@ -115,13 +131,17 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
             Random R = new Random();
 
+            int i = 3;
+
             foreach (var mesh in LTree.Meshes)
             {
                 if (mesh.Name.StartsWith("L"))
                 {
-                    mesh.Tag = Utils.RNG.Next(255);
+                    mesh.Tag = Utils.RNG.Next(i+=20);
                 }
             }
+
+
         }
     }
 }

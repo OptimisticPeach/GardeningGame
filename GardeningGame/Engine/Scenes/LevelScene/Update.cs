@@ -40,6 +40,8 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                     var b = Math.Log10(Math.Tan(Math.Tanh(Math.Sqrt(i)))) / Math.Log10(Math.E);
                 }
             }
+            if (KeyBoardState.IsKeyDown(Keys.Space))
+                RotatingCam.Rotate(0.1f);
         }
 
 
@@ -60,22 +62,23 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                     {
                         if((int)m.Tag == CurrentColorUnderMouse)
                         {
-                            AffectedModelUUID = (int)m.Tag;
-                            Start = new Vector3(RotatingCam.Height, RotatingCam.Radius, RotatingCam.Rotation); //Height Radius Rotation
+                            AffectedModelUUID = -1;//(int)m.Tag;
+                            Start = RotatingCam.CylindricalCoords; //Height Radius Rotation
                             End = new Vector3(0);
                             Vector3 MeshPos;
                             {
                                 Matrix[] modelTransforms = new Matrix[LTree.Bones.Count];
                                 LTree.CopyAbsoluteBoneTransformsTo(modelTransforms);
-                                MeshPos = new Vector3(0);//m.GetPosition(modelTransforms, Matrix.CreateTranslation(0, -1000f, 0));
+                                MeshPos = m.GetPosition(modelTransforms, Matrix.CreateTranslation(0, 0, 0));
                                 MeshPos += m.BoundingSphere.Center;
                             }
-                            MeshPos += LTree.Root.ModelTransform.Translation;
 
                             End.X = MeshPos.Y;
                             End.Y = (float)Math.Sqrt(MeshPos.X * MeshPos.X + MeshPos.Y * MeshPos.Y);
-                            End.Z = (float)Math.Atan2(MeshPos.Y, MeshPos.X);
-                            RotatingCam.setPosition(RotatingCam.Rotation);
+                            End.Z = (float)Math.Atan2(MeshPos.Z, MeshPos.X);
+                            RotatingCam.Height = End.X;
+                            RotatingCam.setPosition();
+                            Delta = 0;
                             break;
                         }
                     }
@@ -84,9 +87,14 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
             if(AffectedModelUUID >= 0)
             {
-                Delta += (float)GT.ElapsedGameTime.TotalMilliseconds;
-                RotatingCam.CylindricalCoords = Vector3.Lerp(Start, End, Delta / 1000000f);
-                if(Delta >= 1000000)
+                Delta += (float)GT.ElapsedGameTime.Milliseconds;
+                //RotatingCam.CylindricalCoords = Vector3.Lerp(Start, End, Delta / 1000f);
+                RotatingCam.Height = MathHelper.Lerp(Start.X, End.X, Delta / 1000f);
+                RotatingCam.Radius = MathHelper.Lerp(Start.Y, End.Y, Delta / 1000f);
+                RotatingCam.Rotation = MathHelper.Lerp(Start.Z, End.Z, Delta / 1000f);
+                RotatingCam.setPosition();
+
+                if (Delta >= 1000)
                 {
                     AffectedModelUUID = -1;
                     Delta = 0;

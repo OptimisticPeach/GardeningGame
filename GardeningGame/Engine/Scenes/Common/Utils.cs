@@ -336,8 +336,6 @@ namespace GardeningGame.Engine.Scenes.Common
             spriteBatch.DrawString(font, Text, Position, colour);
         }
 
-        
-
         public static Color GetAccent()
         {
             return new Color(System.Windows.SystemParameters.WindowGlassColor.R, System.Windows.SystemParameters.WindowGlassColor.G, System.Windows.SystemParameters.WindowGlassColor.B, System.Windows.SystemParameters.WindowGlassColor.A);

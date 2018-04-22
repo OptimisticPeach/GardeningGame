@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using GardeningGame.Engine.Scenes.Common;
 
 namespace GardeningGame.Engine.Scenes.LevelSelect
 {
@@ -27,36 +28,48 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
             //var ScreenBackBuffe= Utils.CreateWobble(ScreenBackBuffer, gameTime);
 
-            Common.RotatingCam.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+            RotatingCam.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
                 SamplerState.LinearClamp, DepthStencilState.Default,
                 RasterizerState.CullNone);
 
-            Common.RotatingCam.spriteBatch.Draw(ScreenOrSelection ? SelectionBackBuffer : ScreenBackBuffer, new Rectangle(0, 0, Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
+            RotatingCam.spriteBatch.Draw(ScreenOrSelection ? SelectionBackBuffer : ScreenBackBuffer, new Rectangle(0, 0, Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
                 Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+
+            Texture2D pixel = new Texture2D(Graphics.GraphicsDevice, 1, 1);
+            pixel.SetData(new[] { Color.White });
+
+            // Find screen equivalent of 3D location in world
+            Vector3 worldLocation = new Vector3(0, 0, 50);
+            Vector3 screenLocation = Graphics.GraphicsDevice.Viewport.Project(worldLocation, RotatingCam.projectionMatrix, RotatingCam.viewMatrix, Matrix.Identity);
+
+            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Red, new Vector3(-2000, 0, 0), new Vector3(2000, 0, 0), 2);
+            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Green, new Vector3(0, -2000, 0), new Vector3(0, 2000, 0), 2);
+            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Blue, new Vector3(0, 0,-2000), new Vector3(0, 0, 2000), 2);
+
             if (Debug.DEBUG)
             {
                 //var LastTreeBushEffectDiffColour = new Color(((BasicEffect)LTree.Meshes["L10"].Effects.First()).DiffuseColor);
                 var LastTreeBushEffectDiffColour = LTree.Meshes["L10"].Tag;
-                Common.RotatingCam.spriteBatch.DrawString(Debug.DebugFont,
+                RotatingCam.spriteBatch.DrawString(Debug.DebugFont,
                     String.Format(
                         Debug.Debugstring,
-                        Common.RotatingCam.Position.X,
-                        Common.RotatingCam.Position.Y,
-                        Common.RotatingCam.Position.Z,
-                        Common.RotatingCam.Target.X,
-                        Common.RotatingCam.Target.Y,
-                        Common.RotatingCam.Target.Z,
+                        RotatingCam.Position.X,
+                        RotatingCam.Position.Y,
+                        RotatingCam.Position.Z,
+                        RotatingCam.Target.X,
+                        RotatingCam.Target.Y,
+                        RotatingCam.Target.Z,
                         CurrentColorUnderMouse,0,0,
                         //LastTreeBushEffectDiffColour.R,
                         //LastTreeBushEffectDiffColour.G,
                         //LastTreeBushEffectDiffColour.B
-                        LastTreeBushEffectDiffColour,0,0
+                        LastTreeBushEffectDiffColour,0,Delta
                         ),
                     //Utils.TextureTo2DArray(ScreenBackBuffe)[Mouse.GetState().X, Mouse.GetState().Y]),
                     new Vector2(10, 50), Color.Black);
             }
 
-            Common.RotatingCam.spriteBatch.End();
+            RotatingCam.spriteBatch.End();
         }
 
         protected void DrawSelectionBuffer()
@@ -96,12 +109,12 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                         effect.FogEnabled = false;
                         effect.VertexColorEnabled = false;
                         effect.DiffuseColor = new Color(255, (int)Mesh.Tag, 255).ToVector3(); //1, 1, 1 by default
-
-                        effect.View = Common.RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                        //effect.SpecularColor = new Vector3(1);
+                        effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                            //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                        effect.Projection = Common.RotatingCam.projectionMatrix;
+                        effect.Projection = RotatingCam.projectionMatrix;
 
-                        effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, -1000, 0);
+                        effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, 0, 0);
                         //effect.World = SmartGardenCamera.worldMatrix;
                     }
                     Mesh.Draw();
@@ -134,11 +147,11 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                     //effect.SpecularColor = new Vector3(1);
                     effect.AmbientLightColor = new Vector3(0.35f);
 
-                    effect.View = Common.RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                    effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                        //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                    effect.Projection = Common.RotatingCam.projectionMatrix;
+                    effect.Projection = RotatingCam.projectionMatrix;
 
-                    effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, -1000f, 0);
+                    effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, 0, 0);
                     //effect.World = SmartGardenCamera.worldMatrix;
                 }
                 Mesh.Draw();
@@ -157,11 +170,11 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                         //effect.SpecularColor = new Vector3(1);
                         effect.AmbientLightColor = new Vector3(1, 0, 0);
 
-                        effect.View = Common.RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                        effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                            //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                        effect.Projection = Common.RotatingCam.projectionMatrix;
+                        effect.Projection = RotatingCam.projectionMatrix;
 
-                        effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, -1000f, 0);
+                        effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, 0, 0);
                         //effect.World = SmartGardenCamera.worldMatrix;
                     }
                     Mesh.Draw();
@@ -169,8 +182,26 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
 
             }
+            
+            //RotatingCam.PrimitivesEffect.World = RotatingCam.worldMatrix;
+            //RotatingCam.PrimitivesEffect.View = RotatingCam.viewMatrix;
+            //RotatingCam.PrimitivesEffect.Projection = RotatingCam.projectionMatrix;
 
-            Graphics.GraphicsDevice.SetRenderTarget(null);
+            //Graphics.GraphicsDevice.SetVertexBuffer(DirectionalLines);
+
+            //RotatingCam.PrimitivesEffect.VertexColorEnabled = true;
+
+            //foreach (EffectPass pass in RotatingCam.PrimitivesEffect.CurrentTechnique.Passes)
+            //{
+            //    pass.Apply();
+
+            //    Graphics.GraphicsDevice.DrawPrimitives(PrimitiveType.LineList, 0, 3);
+            //}
+
+            //Graphics.GraphicsDevice.SetVertexBuffer(null);
+
+            //Graphics.GraphicsDevice.SetRenderTarget(null);
+
         }
     }
 }

@@ -24,9 +24,9 @@ namespace GardeningGame.Engine.Scenes.Common
             //Position -= new Vector3(1800, 0, 0);
         }
 
-        public static void Initialize(GraphicsDevice gd, float radius)
+        public static void Initialize(GraphicsDevice gd, float radius, float near)
         {
-            RotatingCam.Radius = radius;
+            Radius = radius;
             SWidth = gd.PresentationParameters.BackBufferWidth;
             SHeight = gd.PresentationParameters.BackBufferHeight;
             var Max = Math.Max(SWidth, SHeight);
@@ -35,20 +35,21 @@ namespace GardeningGame.Engine.Scenes.Common
             float Angle = 90 * (float)AspectRatio;
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(
                                MathHelper.ToRadians(Angle), gd.Viewport.AspectRatio,
-                800, 3821f);
-            worldMatrix = Matrix.CreateWorld(Target, Vector3.
+                near, 3821f);
+            worldMatrix = Matrix.CreateWorld(new Vector3(0, 0, 0), Vector3.
                           Forward, Vector3.Up);
             spriteBatch = new SpriteBatch(gd);
-            setPosition(0);
+            setPosition();
         }
 
-        public static void setPosition(float rotation)
+        public static void setPosition()
         {
             double x, y, z;
-            double angle = MathHelper.ToRadians((rotation) * 45);
+            double angle = MathHelper.ToRadians((Rotation) * 45);
             x = Radius * Math.Cos(angle);
             y = Height;
             z = Radius * Math.Sin(angle);
+            Target.Y = Height;
             Position = new Vector3((float)x, (float)y, (float)z);
         }
 
@@ -57,12 +58,14 @@ namespace GardeningGame.Engine.Scenes.Common
             Rotation += r;
             //_rotation %= 8;
             Rotation = Utils.mod(Rotation, 8);
-            setPosition(Rotation);
+            setPosition();
         }
 
         public static float Rotation = 0f;
 
         public static SpriteBatch spriteBatch;
+
+        public static BasicEffect PrimitivesEffect;
 
         //Camera
         public static Vector3 Target;

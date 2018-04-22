@@ -124,5 +124,33 @@ namespace GardeningGame.Engine.Scenes.Common
         // and generate the rotation quaternion from it
         rotation = Quatf(m);
 }*/
+
+        public static void DrawLine3D(this SpriteBatch source, GraphicsDevice GD, Matrix View, Matrix Proj, Matrix World, Color C, Vector3 A, Vector3 B, float Thickness)
+        {
+            var NewA = GD.Viewport.Project(A, Proj, View, World);
+            var NewB = GD.Viewport.Project(B, Proj, View, World);
+            source.DrawLine(new Vector2(NewA.X, NewA.Y), new Vector2(NewB.X, NewB.Y), C, Thickness);
+        }
+
+        public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point1, Vector2 point2, Color color, float thickness = 1f)
+        {
+            var distance = Vector2.Distance(point1, point2);
+            var angle = (float)Math.Atan2(point2.Y - point1.Y, point2.X - point1.X);
+            DrawLine(spriteBatch, point1, distance, angle, color, thickness);
+        }
+
+        public static void DrawLine(this SpriteBatch spriteBatch, Vector2 point, float length, float angle, Color color, float thickness = 1f)
+        {
+            var origin = new Vector2(0f, 0.5f);
+            var scale = new Vector2(length, thickness);
+            spriteBatch.Draw(GetTexture(spriteBatch, color), point, null, Color.White, angle, origin, scale, SpriteEffects.None, 0);
+        }
+
+        private static Texture2D GetTexture(SpriteBatch spriteBatch, Color C)
+        {
+            Texture2D Texture = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            Texture.SetData(new[] { C });
+            return Texture;
+        }
     }
 }
