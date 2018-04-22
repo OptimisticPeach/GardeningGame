@@ -65,5 +65,64 @@ namespace GardeningGame.Engine.Scenes.Common
             else
                 return source;
         }
+
+        public static Vector3 GetPosition(this ModelMesh mesh, Matrix[] Bones, Matrix OtherTransforms)
+        {
+            Matrix Original = Bones[mesh.ParentBone.Index] * OtherTransforms;
+
+            Vector3 Pos = new Vector3();
+
+            Vector3 Scale = new Vector3();
+
+            Quaternion Rotation = new Quaternion();
+
+            Original.Decompose(out Scale, out Rotation, out Pos);
+
+            return Pos * Scale;
+        }
+        /*
+         inline void decompose ( Matrix44f matrix, Vec3f& scaling, Quatf& rotation,
+                                                                        Vec3f& position)
+{
+        // extract translation
+        position.x = matrix.at(0, 3);
+        position.y = matrix.at(1, 3);
+        position.z = matrix.at(2, 3);
+       
+        // extract the rows of the matrix
+       
+        Vec3f columns[3] = {
+                matrix.getColumn(0).xyz(),
+                matrix.getColumn(1).xyz(),
+                matrix.getColumn(2).xyz()
+        };
+       
+        // extract the scaling factors
+        scaling.x = columns[0].length();
+        scaling.y = columns[1].length();
+        scaling.z = columns[2].length();
+       
+        // and remove all scaling from the matrix
+        if(scaling.x)
+        {
+                columns[0] /= scaling.x;
+        }
+        if(scaling.y)
+        {
+                columns[1] /= scaling.y;
+        }
+        if(scaling.z)
+        {
+                columns[2] /= scaling.z;
+        }
+       
+        // build a 3x3 rotation matrix
+        Matrix33f m(columns[0].x,columns[1].x,columns[2].x,
+                                  columns[0].y,columns[1].y,columns[2].y,
+                                  columns[0].z,columns[1].z,columns[2].z, true);
+       
+        // and generate the rotation quaternion from it
+        rotation = Quatf(m);
+}*/
     }
 }

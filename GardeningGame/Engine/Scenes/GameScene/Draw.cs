@@ -30,44 +30,44 @@ namespace GardeningGame.Engine.Scenes.Game
 
             //var ScreenBackBuffe= Utils.CreateWobble(ScreenBackBuffer, gameTime);
 
-            SmartGardenCamera.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+            RotatingCam.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
                 SamplerState.LinearClamp, DepthStencilState.Default,
                 RasterizerState.CullNone);
 
-            SmartGardenCamera.spriteBatch.Draw(ScreenOrSelection ? SelectionBackBuffer : ScreenBackBuffer, new Rectangle(0, 0, Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
+            RotatingCam.spriteBatch.Draw(ScreenOrSelection ? SelectionBackBuffer : ScreenBackBuffer, new Rectangle(0, 0, Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
                 Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             if (Selector != null)
-                Selector.Draw(SmartGardenCamera.spriteBatch);
+                Selector.Draw(RotatingCam.spriteBatch);
             if (Debug.DEBUG)
             {
-                SmartGardenCamera.spriteBatch.DrawString(UI.UIText.UIFrame.fonts[(int)UI.UIText.UIElement.Font.Arial],
+                RotatingCam.spriteBatch.DrawString(UI.UIText.UIFrame.fonts[(int)UI.UIText.UIElement.Font.Arial],
                     String.Format(
                         Debug.Debugstring,
-                        SmartGardenCamera.Position.X,
-                        SmartGardenCamera.Position.Y,
-                        SmartGardenCamera.Position.Z,
-                        SmartGardenCamera.Target.X,
-                        SmartGardenCamera.Target.Y,
-                        SmartGardenCamera.Target.Z,
+                        RotatingCam.Position.X,
+                        RotatingCam.Position.Y,
+                        RotatingCam.Position.Z,
+                        RotatingCam.Target.X,
+                        RotatingCam.Target.Y,
+                        RotatingCam.Target.Z,
                         Utils.FPS,
                         Mouse.GetState().ScrollWheelValue,
-                        Vector3.Distance(SmartGardenCamera.Position, new Vector3(0)),
-                        SmartGardenCamera._rotation,
-                        Tiles.Length),
+                        Vector3.Distance(RotatingCam.Position, new Vector3(0)),
+                        RotatingCam.Rotation,
+                        Tiles.Length,0),
                     //Utils.TextureTo2DArray(ScreenBackBuffe)[Mouse.GetState().X, Mouse.GetState().Y]),
                     new Vector2(10, 50), Color.Black);
             }
-            HelpButton.Draw(gameTime, SmartGardenCamera.spriteBatch, 0);
+            HelpButton.Draw(gameTime, RotatingCam.spriteBatch, 0);
 
             if (HelpButton.Toggled)
             {
-                UI.UIText.UIFrame.Overlay.DrawImage(SmartGardenCamera.spriteBatch, Graphics.GraphicsDevice, gameTime, Mouse.GetState(), false);
+                UI.UIText.UIFrame.Overlay.DrawImage(RotatingCam.spriteBatch, Graphics.GraphicsDevice, gameTime, Mouse.GetState(), false);
                 //Utils.DrawTextCentered(Font, SmartGardenCamera.spriteBatch, new Vector2(Graphics.PreferredBackBufferWidth / 2f, Graphics.PreferredBackBufferHeight / 2f), Consts.HelpString, Color.Black);
             }
 
 
 
-            SmartGardenCamera.spriteBatch.End();
+            RotatingCam.spriteBatch.End();
         }
 
         protected void DrawSelectionBuffer(GameTime gameTime, PlantTile[,] pta)
@@ -109,10 +109,10 @@ namespace GardeningGame.Engine.Scenes.Game
                             //effect.SpecularColor = new Vector3(1);
                             effect.AmbientLightColor = new Vector3(0.35f);
 
-                            effect.View = SmartGardenCamera.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                            effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                         //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                            effect.Projection = SmartGardenCamera.projectionMatrix;
-                            effect.World = SmartGardenCamera.worldMatrix * entity.ScaleMatrix * entity.RotationMatrix * Matrix.CreateTranslation(entity.Position) * Matrix.CreateTranslation(pt.Position);// * Matrix.CreateTranslation(new Vector3((x - 1) * spacing, 0, (y - 1) * spacing));// * entity.Transformation;// * Matrix.CreateScale(((MeshTag)mesh.Tag).Scale);
+                            effect.Projection = RotatingCam.projectionMatrix;
+                            effect.World = RotatingCam.worldMatrix * entity.ScaleMatrix * entity.RotationMatrix * Matrix.CreateTranslation(entity.Position) * Matrix.CreateTranslation(pt.Position);// * Matrix.CreateTranslation(new Vector3((x - 1) * spacing, 0, (y - 1) * spacing));// * entity.Transformation;// * Matrix.CreateScale(((MeshTag)mesh.Tag).Scale);
                         }
                         mesh.Draw();
                     }

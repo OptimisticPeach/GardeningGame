@@ -38,9 +38,9 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
         {
             
 
-            Effect.World = SmartGardenCamera.worldMatrix * Matrix.CreateTranslation(Position);
-            Effect.View = SmartGardenCamera.viewMatrix;
-            Effect.Projection = SmartGardenCamera.projectionMatrix;
+            Effect.World = RotatingCam.worldMatrix * Matrix.CreateTranslation(Position);
+            Effect.View = RotatingCam.viewMatrix;
+            Effect.Projection = RotatingCam.projectionMatrix;
 
             if (UseID)
             {

@@ -150,7 +150,7 @@ namespace GardeningGame.Engine.Scenes.Game
             {
                 if (MS.LeftButton == ButtonState.Pressed)
                 {
-                    SmartGardenCamera.Rotate(Utils.Map(
+                    RotatingCam.Rotate(Utils.Map(
                         ((MS.X - PreviousMouseState.X) + (PreviousMouseState.X - PreviousMouseState2.X)) / 2,
                         -200, 200, -1, 1
                         ));
@@ -193,7 +193,7 @@ namespace GardeningGame.Engine.Scenes.Game
             {
                 var N = (1f / (200f * SpeedInterpolation)) * Interpolation;
 
-                SmartGardenCamera.Rotate(MathHelper.Lerp(0, SpeedInterpolation, N));
+                RotatingCam.Rotate(MathHelper.Lerp(0, SpeedInterpolation, N));
                 if (Interpolation > 0)
                 {
                     Interpolation--;

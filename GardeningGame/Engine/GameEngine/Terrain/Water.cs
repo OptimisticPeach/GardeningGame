@@ -143,9 +143,9 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
         {
 
 
-            Effect.World = SmartGardenCamera.worldMatrix * Matrix.CreateTranslation(Position);
-            Effect.View = SmartGardenCamera.viewMatrix;
-            Effect.Projection = SmartGardenCamera.projectionMatrix;
+            Effect.World = RotatingCam.worldMatrix * Matrix.CreateTranslation(Position);
+            Effect.View = RotatingCam.viewMatrix;
+            Effect.Projection = RotatingCam.projectionMatrix;
 
             if (UseID)
             {
@@ -177,7 +177,7 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
 
                 Effect.DirectionalLight0.SpecularColor = new Vector3(1);
 
-                Effect.DirectionalLight0.Direction = SmartGardenCamera.Position * -1f;
+                Effect.DirectionalLight0.Direction = RotatingCam.Position * -1f;
 
                 Effect.DirectionalLight0.Enabled = true;
 

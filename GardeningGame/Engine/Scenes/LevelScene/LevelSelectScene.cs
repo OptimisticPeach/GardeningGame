@@ -75,9 +75,32 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            Common.SmartGardenCamera.Initialize(Graphics.GraphicsDevice, 2000);
+            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 2000);
 
             Graphics.GraphicsDevice.Clear(Color.AliceBlue);
+
+            foreach(var modelList in OrderedModels)
+            {
+                foreach(var model in modelList.Value)
+                {
+                    foreach(var mesh in model.Meshes)
+                    {
+                        foreach(BasicEffect effect in mesh.Effects)
+                        {
+                            effect.Tag = effect.DiffuseColor;
+                        }
+                    }
+                }
+            }
+
+            foreach (var mesh in LTree.Meshes)
+            {
+                foreach (BasicEffect effect in mesh.Effects)
+                {
+                    effect.Tag = effect.DiffuseColor;
+                }
+            }
+
         }
 
 
@@ -96,7 +119,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             {
                 if (mesh.Name.StartsWith("L"))
                 {
-                    mesh.Tag = R.NextColor();
+                    mesh.Tag = Utils.RNG.Next(255);
                 }
             }
         }

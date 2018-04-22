@@ -124,7 +124,7 @@ namespace GardeningGame.Engine.Scenes.Game
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            Common.SmartGardenCamera.Initialize(Graphics.GraphicsDevice, 1200);
+            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 1200);
 
             Graphics.GraphicsDevice.Clear(GameSceneVariables.clearColor);
         }

@@ -12,7 +12,19 @@ namespace GardeningGame.Engine.Scenes
     public static class Debug
     {
         public static readonly bool DEBUG = true;
-        public const string Debugstring = "Cam_X:{0}\nCam_Y:{1}\nCam_Z:{2}\nCT_X:{3}\nCT_Y:{4}\nCT_Z:{5}\nDist:{8}\nFPS:{6:N2}\nScroll:{7}\nRot:{9}\n{10}";
+        public const string Debugstring =
+            @"Cam_X:{0}
+Cam_Y:{1}
+Cam_Z:{2}
+CT_X:{3}
+CT_Y:{4}
+CT_Z:{5}
+M_R:{6}
+M_G:{7}
+M_B:{8}
+MSR:{9}
+MSG:{10}
+MSB:{11}";
         public static SpriteFont DebugFont;
     }
 }
