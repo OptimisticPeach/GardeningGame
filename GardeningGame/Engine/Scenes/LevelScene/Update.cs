@@ -24,10 +24,17 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
         float Delta = 0;
         Vector3 Start; //Height, Radius, Rotation
         Vector3 End;
+        bool PreviouslyPressed = false;
+        private Color[] SBBData;
 
         protected void updateKeys(GameTime time, KeyboardState KeyBoardState)
         {
             ScreenOrSelection = KeyBoardState.IsKeyDown(Keys.A);
+
+            if (KeyBoardState.IsKeyDown(Keys.W))
+            {
+
+            }
 
             if (KeyBoardState.IsKeyDown(Keys.Z))
             {
@@ -54,30 +61,29 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             //}
             updateKeys(GT, KS);
 
-            if(MS.LeftButton == ButtonState.Pressed)
+            if (MS.LeftButton == ButtonState.Pressed && !PreviouslyPressed)
             {
-                foreach(var m in LTree.Meshes)
+                foreach (var m in LTree.Meshes)
                 {
                     if (m.Name.StartsWith("L"))
                     {
-                        if((int)m.Tag == CurrentColorUnderMouse)
+                        if ((int)m.Tag == CurrentColorUnderMouse)
                         {
-                            AffectedModelUUID = -1;//(int)m.Tag;
-                            Start = RotatingCam.CylindricalCoords; //Height Radius Rotation
                             End = new Vector3(0);
-                            Vector3 MeshPos;
-                            {
-                                Matrix[] modelTransforms = new Matrix[LTree.Bones.Count];
-                                LTree.CopyAbsoluteBoneTransformsTo(modelTransforms);
-                                MeshPos = m.GetPosition(modelTransforms, Matrix.CreateTranslation(0, 0, 0));
-                                MeshPos += m.BoundingSphere.Center;
-                            }
+                            AffectedModelUUID = (int)m.Tag;
+                            Start = (Vector3)((object)RotatingCam.CylindricalCoords); //Height Radius Rotation
+
+                            var MeshPos = m.BoundingSphere.Center;
+
+                            MeshPos += m.ParentBone.ModelTransform.Translation;
+                            MeshPos += m.ParentBone.Transform.Translation;
+
+
 
                             End.X = MeshPos.Y;
-                            End.Y = (float)Math.Sqrt(MeshPos.X * MeshPos.X + MeshPos.Y * MeshPos.Y);
+                            End.Y = (float)Math.Sqrt(MeshPos.X * MeshPos.X + MeshPos.Z * MeshPos.Z) + 800;
                             End.Z = (float)Math.Atan2(MeshPos.Z, MeshPos.X);
-                            RotatingCam.Height = End.X;
-                            RotatingCam.setPosition();
+                            
                             Delta = 0;
                             break;
                         }
@@ -85,38 +91,44 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 }
             }
 
-            if(AffectedModelUUID >= 0)
+            if (AffectedModelUUID >= 0)
             {
-                Delta += (float)GT.ElapsedGameTime.Milliseconds;
-                //RotatingCam.CylindricalCoords = Vector3.Lerp(Start, End, Delta / 1000f);
-                RotatingCam.Height = MathHelper.Lerp(Start.X, End.X, Delta / 1000f);
-                RotatingCam.Radius = MathHelper.Lerp(Start.Y, End.Y, Delta / 1000f);
-                RotatingCam.Rotation = MathHelper.Lerp(Start.Z, End.Z, Delta / 1000f);
+                Delta += (float)GT.ElapsedGameTime.TotalSeconds;
+                RotatingCam.CylindricalCoords = Vector3.Lerp(Start, End, Delta);
                 RotatingCam.setPosition();
 
-                if (Delta >= 1000)
+                //RotatingCam.Position = Vector3.Lerp(Start, End, Delta / 1000f);
+
+                if (Delta >= 1)
                 {
                     AffectedModelUUID = -1;
                     Delta = 0;
-                    End = new Vector3(0);
-                    Start = new Vector3(0);
+                    //End = new Vector3(0);
+                    //Start = new Vector3(0);
                 }
             }
 
             //RotatingCam.Rotate(0.01f);
 
-            Color[] SBBData = new Color[SelectionBackBuffer.Width * SelectionBackBuffer.Height];
-
             SelectionBackBuffer.GetData(SBBData);
 
-            try
-            {
+            if (MS.X > 0 && MS.Y > 0 && MS.X < SelectionBackBuffer.Width && MS.Y < SelectionBackBuffer.Height)
                 CurrentColorUnderMouse = SBBData[MS.X + MS.Y * SelectionBackBuffer.Width].G;
-            }
-            catch
+
+            foreach (var m in LTree.Meshes)
             {
-                CurrentColorUnderMouse = 0;
+                if (m.Name.StartsWith("L"))
+                {
+                    if ((int)m.Tag == CurrentColorUnderMouse)
+                    {
+                        var MeshPos = m.BoundingSphere.Center;
+
+                        MeshPos += m.ParentBone.ModelTransform.Translation;
+                        MeshPos += m.ParentBone.Transform.Translation;
+                    }
+                }
             }
+            PreviouslyPressed = MS.LeftButton == ButtonState.Pressed;
         }
     }
 }

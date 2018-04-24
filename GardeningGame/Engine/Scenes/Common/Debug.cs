@@ -16,15 +16,15 @@ namespace GardeningGame.Engine.Scenes
             @"Cam_X:{0}
 Cam_Y:{1}
 Cam_Z:{2}
-CT_X:{3}
-CT_Y:{4}
-CT_Z:{5}
-M_R:{6}
-M_G:{7}
-M_B:{8}
-MSR:{9}
-MSG:{10}
-MSB:{11}";
+CamHeight:{3}
+CamRadius:{4}
+CamRotation:{5}
+S_H:{6}
+S_R:{7}
+S_R:{8}
+E_H:{9}
+E_R:{10}
+E_R:{11}";
         public static SpriteFont DebugFont;
     }
 }

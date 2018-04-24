@@ -42,9 +42,17 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             Vector3 worldLocation = new Vector3(0, 0, 50);
             Vector3 screenLocation = Graphics.GraphicsDevice.Viewport.Project(worldLocation, RotatingCam.projectionMatrix, RotatingCam.viewMatrix, Matrix.Identity);
 
-            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Red, new Vector3(-2000, 0, 0), new Vector3(2000, 0, 0), 2);
-            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Green, new Vector3(0, -2000, 0), new Vector3(0, 2000, 0), 2);
-            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Blue, new Vector3(0, 0,-2000), new Vector3(0, 0, 2000), 2);
+            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Red,   new Vector3(-1000, 0, 0), new Vector3(1000, 0, 0), 2);
+            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Green, new Vector3(0, -1000, 0), new Vector3(0, 1000, 0), 2);
+            RotatingCam.spriteBatch.DrawLine3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Blue,  new Vector3(0, 0,-1000),  new Vector3(0, 0, 1000), 2);
+
+            RotatingCam.spriteBatch.DrawText3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Blue,  new Vector3(0, 0, -1000), Debug.DebugFont, "Negative Z");
+            RotatingCam.spriteBatch.DrawText3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Blue,  new Vector3(0, 0, 1000),  Debug.DebugFont, "Positive Z");
+            RotatingCam.spriteBatch.DrawText3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Green, new Vector3(0, -1000, 0), Debug.DebugFont, "Negative Y");
+            RotatingCam.spriteBatch.DrawText3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Green, new Vector3(0, 1000, 0),  Debug.DebugFont, "Positive Y");
+            RotatingCam.spriteBatch.DrawText3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Red,   new Vector3(-1000, 0, 0), Debug.DebugFont, "Negative X");
+            RotatingCam.spriteBatch.DrawText3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Red,   new Vector3(1000, 0, 0),  Debug.DebugFont, "Positive X");
+            RotatingCam.spriteBatch.DrawText3D(Graphics.GraphicsDevice, RotatingCam.viewMatrix, RotatingCam.projectionMatrix, RotatingCam.worldMatrix, Color.Black, new Vector3(0, 0, 0),     Debug.DebugFont, "0, 0");
 
             if (Debug.DEBUG)
             {
@@ -53,17 +61,15 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 RotatingCam.spriteBatch.DrawString(Debug.DebugFont,
                     String.Format(
                         Debug.Debugstring,
-                        RotatingCam.Position.X,
-                        RotatingCam.Position.Y,
-                        RotatingCam.Position.Z,
-                        RotatingCam.Target.X,
-                        RotatingCam.Target.Y,
-                        RotatingCam.Target.Z,
-                        CurrentColorUnderMouse,0,0,
+                        0,0,0,
+                        RotatingCam.Height,
+                        RotatingCam.Radius,
+                        RotatingCam.Rotation,
+                        Start.X,Start.Y,Start.Z,
                         //LastTreeBushEffectDiffColour.R,
                         //LastTreeBushEffectDiffColour.G,
                         //LastTreeBushEffectDiffColour.B
-                        LastTreeBushEffectDiffColour,0,Delta
+                        End.X, End.Y, End.Z
                         ),
                     //Utils.TextureTo2DArray(ScreenBackBuffe)[Mouse.GetState().X, Mouse.GetState().Y]),
                     new Vector2(10, 50), Color.Black);
@@ -109,12 +115,11 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                         effect.FogEnabled = false;
                         effect.VertexColorEnabled = false;
                         effect.DiffuseColor = new Color(255, (int)Mesh.Tag, 255).ToVector3(); //1, 1, 1 by default
-                        //effect.SpecularColor = new Vector3(1);
                         effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                            //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
                         effect.Projection = RotatingCam.projectionMatrix;
 
-                        effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, 0, 0);
+                        effect.World = modelTransforms[Mesh.ParentBone.Index];
                         //effect.World = SmartGardenCamera.worldMatrix;
                     }
                     Mesh.Draw();
@@ -150,8 +155,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                     effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                        //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
                     effect.Projection = RotatingCam.projectionMatrix;
-
-                    effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, 0, 0);
+                    effect.World = modelTransforms[Mesh.ParentBone.Index];
                     //effect.World = SmartGardenCamera.worldMatrix;
                 }
                 Mesh.Draw();
@@ -174,7 +178,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                                                                            //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
                         effect.Projection = RotatingCam.projectionMatrix;
 
-                        effect.World = modelTransforms[Mesh.ParentBone.Index] * Matrix.CreateTranslation(0, 0, 0);
+                        effect.World = modelTransforms[Mesh.ParentBone.Index];
                         //effect.World = SmartGardenCamera.worldMatrix;
                     }
                     Mesh.Draw();

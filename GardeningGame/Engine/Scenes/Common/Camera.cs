@@ -45,7 +45,7 @@ namespace GardeningGame.Engine.Scenes.Common
         public static void setPosition()
         {
             double x, y, z;
-            double angle = MathHelper.ToRadians((Rotation) * 45);
+            double angle = Rotation;
             x = Radius * Math.Cos(angle);
             y = Height;
             z = Radius * Math.Sin(angle);

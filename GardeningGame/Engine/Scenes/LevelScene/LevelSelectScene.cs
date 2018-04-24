@@ -28,13 +28,9 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
         RenderTarget2D ScreenBackBuffer;
         bool ScreenOrSelection = false;
 
-        VertexBuffer DirectionalLines;
-
         Model LTree { get; set; }
 
         BasicEffect PrimitivesEffect;
-
-        Dictionary<string, List<Model>> OrderedModels = new Dictionary<string, List<Model>>();
 
         private void SetMultiSampling(object sender, PreparingDeviceSettingsEventArgs e)
         {
@@ -82,20 +78,6 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
             Graphics.GraphicsDevice.Clear(Color.AliceBlue);
 
-            foreach(var modelList in OrderedModels)
-            {
-                foreach(var model in modelList.Value)
-                {
-                    foreach(var mesh in model.Meshes)
-                    {
-                        foreach(BasicEffect effect in mesh.Effects)
-                        {
-                            effect.Tag = effect.DiffuseColor;
-                        }
-                    }
-                }
-            }
-
             foreach (var mesh in LTree.Meshes)
             {
                 foreach (BasicEffect effect in mesh.Effects)
@@ -104,19 +86,9 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 }
             }
 
-            List<VertexPositionColor> Lines = new List<VertexPositionColor>();
-
-            Lines.Add(new VertexPositionColor(new Vector3(40000, 0, 0), Color.Red));
-            Lines.Add(new VertexPositionColor(new Vector3(-40000, 0, 0), Color.DarkRed));
-            Lines.Add(new VertexPositionColor(new Vector3(0, 40000, 0), Color.Green));
-            Lines.Add(new VertexPositionColor(new Vector3(0, -40000, 0), Color.DarkGreen));
-            Lines.Add(new VertexPositionColor(new Vector3(0, 0, 40000), Color.Blue));
-            Lines.Add(new VertexPositionColor(new Vector3(0, 0, -40000), Color.DarkBlue));
-
-            DirectionalLines = new VertexBuffer(Graphics.GraphicsDevice, typeof(VertexPositionColor), 6, BufferUsage.WriteOnly);
-            DirectionalLines.SetData(Lines.ToArray());
-
             RotatingCam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
+
+            SBBData = new Color[SelectionBackBuffer.Height * SelectionBackBuffer.Width];
         }
 
 
@@ -137,7 +109,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             {
                 if (mesh.Name.StartsWith("L"))
                 {
-                    mesh.Tag = Utils.RNG.Next(i+=20);
+                    mesh.Tag = i;i+=10;
                 }
             }
 

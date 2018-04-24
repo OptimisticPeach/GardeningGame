@@ -152,5 +152,17 @@ namespace GardeningGame.Engine.Scenes.Common
             Texture.SetData(new[] { C });
             return Texture;
         }
+
+        public static void DrawText3D(this SpriteBatch source, GraphicsDevice GD, Matrix View, Matrix Proj, Matrix World, Color C, Vector3 Pos, SpriteFont Font, String Text)
+        {
+            Vector2 NewPos = new Vector2();
+
+            var projectedPos = GD.Viewport.Project(Pos, Proj, View, World);
+
+            NewPos.X = projectedPos.X;
+            NewPos.Y = projectedPos.Y;
+
+            source.DrawString(Font, Text, NewPos, C);
+        }
     }
 }
