@@ -109,10 +109,13 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             {
                 if (mesh.Name.StartsWith("L"))
                 {
-                    mesh.Tag = i;i+=10;
+                    mesh.Tag = new Color(255, i, 255).ToVector3();
+                    i +=10;
                 }
             }
-
+            
+            LTreeTransForms = new Matrix[LTree.Bones.Count];
+            LTree.CopyAbsoluteBoneTransformsTo(LTreeTransForms);
 
         }
     }

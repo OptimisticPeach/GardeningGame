@@ -11,7 +11,8 @@ namespace GardeningGame.Engine.Scenes
 {
     public static class Debug
     {
-        public static readonly bool DEBUG = true;
+        public static readonly bool DEBUG = false;
+        public static readonly Vector2 Position = new Vector2(10, 50);
         public const string Debugstring =
             @"Cam_X:{0}
 Cam_Y:{1}

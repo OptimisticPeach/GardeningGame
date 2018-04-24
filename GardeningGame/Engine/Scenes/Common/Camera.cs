@@ -44,13 +44,11 @@ namespace GardeningGame.Engine.Scenes.Common
 
         public static void setPosition()
         {
-            double x, y, z;
             double angle = Rotation;
-            x = Radius * Math.Cos(angle);
-            y = Height;
-            z = Radius * Math.Sin(angle);
+            Position.X = Radius * (float)Math.Cos(angle);
+            Position.Y = Height;
+            Position.Z = Radius * (float)Math.Sin(angle);
             Target.Y = Height;
-            Position = new Vector3((float)x, (float)y, (float)z);
         }
 
         public static void Rotate(float r)
@@ -71,27 +69,13 @@ namespace GardeningGame.Engine.Scenes.Common
         public static Vector3 Target;
         public static Vector3 Position;
 
-        public static Vector3 CylindricalCoords
-        {
-            get
-            {
-                return new Vector3(Height, Radius, Rotation);
-            }
-            set
-            {
-                Height = value.X;
-                Radius = value.Y;
-                Rotation = value.Z;
-            }
-        }
-
         public static Matrix projectionMatrix;
         public static Matrix viewMatrix
         {
             get
             {
                 return Matrix.CreateLookAt(Position, Target,
-                         Vector3.Up);
+                         Vector3.Up);                                   //////////////////???????????????????????????
             }
         }
         public static Matrix worldMatrix;

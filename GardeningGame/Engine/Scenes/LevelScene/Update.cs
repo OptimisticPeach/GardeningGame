@@ -18,12 +18,12 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 {
     public partial class LevelSelectScene
     {
-        public int AffectedModelUUID = -1;
-        public int CurrentColorUnderMouse;
+        public bool IsMoving = false;
+        public float CurrentColorUnderMouse;
 
         float Delta = 0;
-        Vector3 Start; //Height, Radius, Rotation
-        Vector3 End;
+        Vector3 Start = new Vector3(); //Height, Radius, Rotation
+        Vector3 End = new Vector3();
         bool PreviouslyPressed = false;
         private Color[] SBBData;
 
@@ -33,7 +33,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
             if (KeyBoardState.IsKeyDown(Keys.W))
             {
-
+                new Vector3();
             }
 
             if (KeyBoardState.IsKeyDown(Keys.Z))
@@ -67,11 +67,14 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 {
                     if (m.Name.StartsWith("L"))
                     {
-                        if ((int)m.Tag == CurrentColorUnderMouse)
+                        if (((Vector3)m.Tag).Y == CurrentColorUnderMouse)
                         {
                             End = new Vector3(0);
-                            AffectedModelUUID = (int)m.Tag;
-                            Start = (Vector3)((object)RotatingCam.CylindricalCoords); //Height Radius Rotation
+                            IsMoving = true;
+                            //Start = (Vector3)((object)RotatingCam.CylindricalCoords); //Height Radius Rotation
+                            Start.X = RotatingCam.Height;
+                            Start.Y = RotatingCam.Radius;
+                            Start.Z = RotatingCam.Rotation;
 
                             var MeshPos = m.BoundingSphere.Center;
 
@@ -91,17 +94,22 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 }
             }
 
-            if (AffectedModelUUID >= 0)
+            if (IsMoving)
             {
                 Delta += (float)GT.ElapsedGameTime.TotalSeconds;
-                RotatingCam.CylindricalCoords = Vector3.Lerp(Start, End, Delta);
+                //RotatingCam.CylindricalCoords = Vector3.Lerp(Start, End, Delta);
+
+                RotatingCam.Height = MathHelper.Lerp(Start.X, End.X, Delta);
+                RotatingCam.Radius = MathHelper.Lerp(Start.Y, End.Y, Delta);
+                RotatingCam.Rotation = MathHelper.Lerp(Start.Z, End.Z, Delta);
+
                 RotatingCam.setPosition();
 
                 //RotatingCam.Position = Vector3.Lerp(Start, End, Delta / 1000f);
 
                 if (Delta >= 1)
                 {
-                    AffectedModelUUID = -1;
+                    IsMoving = false;
                     Delta = 0;
                     //End = new Vector3(0);
                     //Start = new Vector3(0);
@@ -113,13 +121,13 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             SelectionBackBuffer.GetData(SBBData);
 
             if (MS.X > 0 && MS.Y > 0 && MS.X < SelectionBackBuffer.Width && MS.Y < SelectionBackBuffer.Height)
-                CurrentColorUnderMouse = SBBData[MS.X + MS.Y * SelectionBackBuffer.Width].G;
+                CurrentColorUnderMouse = SBBData[MS.X + MS.Y * SelectionBackBuffer.Width].G / 255f;
 
             foreach (var m in LTree.Meshes)
             {
                 if (m.Name.StartsWith("L"))
                 {
-                    if ((int)m.Tag == CurrentColorUnderMouse)
+                    if (((Vector3)m.Tag).Y == CurrentColorUnderMouse)
                     {
                         var MeshPos = m.BoundingSphere.Center;
 
