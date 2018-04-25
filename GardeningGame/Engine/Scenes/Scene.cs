@@ -10,15 +10,17 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GardeningGame.Engine.Scenes
 {
-    public delegate void SceneChangeHandler(Scene Sender, ChangeArgs Args);
+    public delegate void SceneChangeHandler(Scene Sender, SceneType TypeToSwitchTo, EventArgs args);
 
-    public class ChangeArgs : EventArgs
+    public enum SceneType
     {
-
+        Game,
+        LevelSelect
     }
 
     public interface Scene
     {
+        bool ContentLoaded { get; set; }
         void Draw(GameTime GT);
         void Update(GameTime GT, MouseState MS, KeyboardState KS);
         void LoadContent(ContentManager Content);

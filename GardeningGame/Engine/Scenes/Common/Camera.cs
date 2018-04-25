@@ -14,19 +14,15 @@ namespace GardeningGame.Engine.Scenes.Common
         public static int SWidth;
         public static int SHeight;
 
-        public static float Height = 1400;
+        public static float Height;
 
-        public static float Radius = 400;
+        public static float Radius;
 
-        static RotatingCam()
-        {
-            Target = new Vector3(0, 0, 0);
-            //Position -= new Vector3(1800, 0, 0);
-        }
-
-        public static void Initialize(GraphicsDevice gd, float radius, float near)
+        public static void Initialize(GraphicsDevice gd, float radius, float near, bool setY, float Height)
         {
             Radius = radius;
+            RotatingCam.Height = Height;
+            Target = new Vector3(0, 0, 0);
             SWidth = gd.PresentationParameters.BackBufferWidth;
             SHeight = gd.PresentationParameters.BackBufferHeight;
             var Max = Math.Max(SWidth, SHeight);
@@ -39,24 +35,25 @@ namespace GardeningGame.Engine.Scenes.Common
             worldMatrix = Matrix.CreateWorld(new Vector3(0, 0, 0), Vector3.
                           Forward, Vector3.Up);
             spriteBatch = new SpriteBatch(gd);
-            setPosition();
+            setPosition(setY);
         }
 
-        public static void setPosition()
+        public static void setPosition(bool setY)
         {
             double angle = Rotation;
             Position.X = Radius * (float)Math.Cos(angle);
             Position.Y = Height;
             Position.Z = Radius * (float)Math.Sin(angle);
-            Target.Y = Height;
+            if(setY)
+                Target.Y = Height;
         }
 
-        public static void Rotate(float r)
+        public static void Rotate(float r, bool setY)
         {
             Rotation += r;
             //_rotation %= 8;
             Rotation = Utils.mod(Rotation, 8);
-            setPosition();
+            setPosition(setY);
         }
 
         public static float Rotation = 0f;

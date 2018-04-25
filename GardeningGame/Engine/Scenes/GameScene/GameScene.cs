@@ -42,11 +42,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
         Dictionary<string, List<Model>> OrderedModels = new Dictionary<string, List<Model>>();
 
-        private void SetMultiSampling(object sender, PreparingDeviceSettingsEventArgs e)
-        {
-            var pp = e.GraphicsDeviceInformation.PresentationParameters;
-            pp.MultiSampleCount = 8;
-        }
+        public bool ContentLoaded { get; set; }
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -124,7 +120,7 @@ namespace GardeningGame.Engine.Scenes.Game
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 1200, 800);
+            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 1200, 800, false, 1400);
 
             Graphics.GraphicsDevice.Clear(GameSceneVariables.clearColor);
         }
@@ -184,6 +180,8 @@ namespace GardeningGame.Engine.Scenes.Game
             Entities.Reed.Sprite = Content.Load<Texture2D>(@"GUI\Reed");
             Entities.Shrub.Sprite = Content.Load<Texture2D>(@"GUI\Shrub");
             Entities.FlowerBush.Sprite = Content.Load<Texture2D>(@"GUI\FlowerBush");
+
+            ContentLoaded = true;
         }
     }
 }

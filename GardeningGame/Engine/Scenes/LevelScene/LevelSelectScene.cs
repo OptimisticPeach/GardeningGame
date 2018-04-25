@@ -32,11 +32,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
         BasicEffect PrimitivesEffect;
 
-        private void SetMultiSampling(object sender, PreparingDeviceSettingsEventArgs e)
-        {
-            var pp = e.GraphicsDeviceInformation.PresentationParameters;
-            pp.MultiSampleCount = 8;
-        }
+        public bool ContentLoaded { get; set; }
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -74,7 +70,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 2000, 100);
+            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 2000, 100, true, 1400);
 
             Graphics.GraphicsDevice.Clear(Color.AliceBlue);
 
@@ -117,6 +113,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             LTreeTransForms = new Matrix[LTree.Bones.Count];
             LTree.CopyAbsoluteBoneTransformsTo(LTreeTransForms);
 
+            ContentLoaded = true;
         }
     }
 }

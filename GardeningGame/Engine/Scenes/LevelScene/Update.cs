@@ -26,19 +26,25 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
         Vector3 End = new Vector3();
         bool PreviouslyPressed = false;
         private Color[] SBBData;
+        string LevelSelected = "";
+
+        public class LevelSelectSceneSendingArgs : EventArgs
+        {
+            public string Name;
+        }
 
         protected void updateKeys(GameTime time, KeyboardState KeyBoardState)
         {
             ScreenOrSelection = KeyBoardState.IsKeyDown(Keys.A);
 
-            if (KeyBoardState.IsKeyDown(Keys.W))
-            {
-                new Vector3();
-            }
+            //if (KeyBoardState.IsKeyDown(Keys.Enter))
+            //{
+            //    new Vector3();
+            //}
 
             if (KeyBoardState.IsKeyDown(Keys.Z))
             {
-                OnRequestedSceneChanged(this, null);
+                OnRequestedSceneChanged(this, SceneType.Game, new LevelSelectSceneSendingArgs() { Name = LevelSelected });
             }
             if (KeyBoardState.IsKeyDown(Keys.X))
             {
@@ -48,7 +54,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 }
             }
             if (KeyBoardState.IsKeyDown(Keys.Space))
-                RotatingCam.Rotate(0.1f);
+                RotatingCam.Rotate(0.1f, true);
         }
 
 
@@ -69,6 +75,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                     {
                         if (((Vector3)m.Tag).Y == CurrentColorUnderMouse)
                         {
+                            LevelSelected = m.Name;
                             End = new Vector3(0);
                             IsMoving = true;
                             //Start = (Vector3)((object)RotatingCam.CylindricalCoords); //Height Radius Rotation
@@ -103,7 +110,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 RotatingCam.Radius = MathHelper.Lerp(Start.Y, End.Y, Delta);
                 RotatingCam.Rotation = MathHelper.Lerp(Start.Z, End.Z, Delta);
 
-                RotatingCam.setPosition();
+                RotatingCam.setPosition(true);
 
                 //RotatingCam.Position = Vector3.Lerp(Start, End, Delta / 1000f);
 

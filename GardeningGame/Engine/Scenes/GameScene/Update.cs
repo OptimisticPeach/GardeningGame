@@ -39,7 +39,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
             if (KeyBoardState.IsKeyDown(Keys.Z))
             {
-                OnRequestedSceneChanged(this, null);
+                OnRequestedSceneChanged(this, SceneType.LevelSelect, null);
             }
 
             if (KeyBoardState.IsKeyDown(Keys.Y) && IslandMovement <= 0)
@@ -153,7 +153,7 @@ namespace GardeningGame.Engine.Scenes.Game
                     RotatingCam.Rotate(Utils.Map(
                         ((MS.X - PreviousMouseState.X) + (PreviousMouseState.X - PreviousMouseState2.X)) / 2,
                         -200, 200, -1, 1
-                        ));
+                        ), false);
 
                 }
                 else if (MS.LeftButton == ButtonState.Released && PreviousMouseState.LeftButton == ButtonState.Pressed)
@@ -193,7 +193,7 @@ namespace GardeningGame.Engine.Scenes.Game
             {
                 var N = (1f / (200f * SpeedInterpolation)) * Interpolation;
 
-                RotatingCam.Rotate(MathHelper.Lerp(0, SpeedInterpolation, N));
+                RotatingCam.Rotate(MathHelper.Lerp(0, SpeedInterpolation, N), false);
                 if (Interpolation > 0)
                 {
                     Interpolation--;
