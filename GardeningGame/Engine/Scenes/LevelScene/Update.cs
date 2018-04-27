@@ -106,6 +106,14 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 Delta += (float)GT.ElapsedGameTime.TotalSeconds;
                 //RotatingCam.CylindricalCoords = Vector3.Lerp(Start, End, Delta);
 
+                Start.X += RotatingCam.Height;
+                Start.Y += RotatingCam.Radius;
+                Start.Z += RotatingCam.Rotation;
+
+                Start.X /= 2;
+                Start.Y /= 2;
+                Start.Z /= 2;
+
                 RotatingCam.Height = MathHelper.Lerp(Start.X, End.X, Delta);
                 RotatingCam.Radius = MathHelper.Lerp(Start.Y, End.Y, Delta);
                 RotatingCam.Rotation = MathHelper.Lerp(Start.Z, End.Z, Delta);

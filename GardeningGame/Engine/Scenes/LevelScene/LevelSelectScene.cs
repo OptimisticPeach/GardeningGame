@@ -87,7 +87,15 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             SBBData = new Color[SelectionBackBuffer.Height * SelectionBackBuffer.Width];
         }
 
+        public void LoadData(DataLoader s)
+        {
+            //Do nothing
+        }
 
+        public void SaveData(DataWriter s)
+        {
+            //Do nothing
+        }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load

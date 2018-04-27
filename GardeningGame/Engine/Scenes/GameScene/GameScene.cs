@@ -125,7 +125,15 @@ namespace GardeningGame.Engine.Scenes.Game
             Graphics.GraphicsDevice.Clear(GameSceneVariables.clearColor);
         }
 
+        public void LoadData(DataLoader s)
+        {
 
+        }
+
+        public void SaveData(DataWriter s)
+        {
+            
+        }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load

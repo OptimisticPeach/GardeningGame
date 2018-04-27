@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace GardeningGame.Engine.Scenes
 {
@@ -25,6 +26,8 @@ namespace GardeningGame.Engine.Scenes
         void Update(GameTime GT, MouseState MS, KeyboardState KS);
         void LoadContent(ContentManager Content);
         void Initialize(GraphicsDeviceManager GD);
+        void SaveData(DataWriter S);
+        void LoadData(DataLoader S);
         event SceneChangeHandler OnRequestedSceneChanged;
     }
 }
