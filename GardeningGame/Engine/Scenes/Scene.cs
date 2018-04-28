@@ -26,8 +26,8 @@ namespace GardeningGame.Engine.Scenes
         void Update(GameTime GT, MouseState MS, KeyboardState KS);
         void LoadContent(ContentManager Content);
         void Initialize(GraphicsDeviceManager GD);
-        void SaveData(DataWriter S);
-        void LoadData(DataLoader S);
+        void SaveData();
+        void LoadData();
         event SceneChangeHandler OnRequestedSceneChanged;
     }
 }

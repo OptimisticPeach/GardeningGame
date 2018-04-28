@@ -11,10 +11,9 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
 {
     public class Bush : Entity
     {
-        int BushType;
         public Bush(ref Dictionary<string, List<Model>> Lists)
         {
-            BushType = Utils.RNG.Next(Lists["Bushes"].Count);
+            Kind = Utils.RNG.Next(Lists["Bushes"].Count);
             Rotation.Y += Utils.RNG.Next(360);
         }
 
@@ -22,7 +21,7 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
 
         public override Model getModel(ref Dictionary<string, List<Model>> Source)
         {
-            return Source["Bushes"][BushType];
+            return Source["Bushes"][Kind];
         }
 
         public static new Texture2D Sprite;
@@ -34,5 +33,6 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
                 Scales += Offset;
             }
         }
+        public Bush() { }
     }
 }

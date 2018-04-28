@@ -78,6 +78,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
             foreach (var pt in pta)
             {
+                if(pt != null)
                 pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, true);
             }
             Water.Draw(Graphics.GraphicsDevice, new Vector3(0), true);
@@ -93,33 +94,36 @@ namespace GardeningGame.Engine.Scenes.Game
 
             foreach (var pt in pta)
             {
-                foreach (var entity in pt.EntityList)
+                if (pt != null)
                 {
-                    foreach (var mesh in entity.getModel(ref OrderedModels).Meshes)//entity.getModel(ref OrderedModels).Meshes)
+                    foreach (var entity in pt.EntityList)
                     {
-                        foreach (BasicEffect effect in mesh.Effects)
+                        foreach (var mesh in entity.getModel(ref OrderedModels).Meshes)//entity.getModel(ref OrderedModels).Meshes)
                         {
-                            //effect.DirectionalLight0.Direction = new Vector3(0, 0, 0);
-                            //effect.DirectionalLight0.Enabled = true;
-                            //effect.DirectionalLight0.DiffuseColor = new Vector3(0.8f);
-                            effect.EnableDefaultLighting();
+                            foreach (BasicEffect effect in mesh.Effects)
+                            {
+                                //effect.DirectionalLight0.Direction = new Vector3(0, 0, 0);
+                                //effect.DirectionalLight0.Enabled = true;
+                                //effect.DirectionalLight0.DiffuseColor = new Vector3(0.8f);
+                                effect.EnableDefaultLighting();
 
-                            //effect.EmissiveColor = new Vector3(1, 0, 0);
+                                //effect.EmissiveColor = new Vector3(1, 0, 0);
 
-                            //effect.SpecularColor = new Vector3(1);
-                            effect.AmbientLightColor = new Vector3(0.35f);
+                                //effect.SpecularColor = new Vector3(1);
+                                effect.AmbientLightColor = new Vector3(0.35f);
 
-                            effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
-                                                                        //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                            effect.Projection = RotatingCam.projectionMatrix;
-                            effect.World = RotatingCam.worldMatrix * entity.ScaleMatrix * entity.RotationMatrix * Matrix.CreateTranslation(entity.Position) * Matrix.CreateTranslation(pt.Position);// * Matrix.CreateTranslation(new Vector3((x - 1) * spacing, 0, (y - 1) * spacing));// * entity.Transformation;// * Matrix.CreateScale(((MeshTag)mesh.Tag).Scale);
+                                effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                                                                      //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
+                                effect.Projection = RotatingCam.projectionMatrix;
+                                effect.World = RotatingCam.worldMatrix * entity.ScaleMatrix * entity.RotationMatrix * Matrix.CreateTranslation(entity.Position) * Matrix.CreateTranslation(pt.Position);// * Matrix.CreateTranslation(new Vector3((x - 1) * spacing, 0, (y - 1) * spacing));// * entity.Transformation;// * Matrix.CreateScale(((MeshTag)mesh.Tag).Scale);
+                            }
+                            mesh.Draw();
                         }
-                        mesh.Draw();
                     }
+
+
+                    pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, false);
                 }
-
-
-                pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, false);
 
             }
             Water.Draw(Graphics.GraphicsDevice, new Vector3(0), false);

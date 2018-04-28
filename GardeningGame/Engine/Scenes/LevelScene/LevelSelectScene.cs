@@ -87,12 +87,12 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             SBBData = new Color[SelectionBackBuffer.Height * SelectionBackBuffer.Width];
         }
 
-        public void LoadData(DataLoader s)
+        public void LoadData()
         {
             //Do nothing
         }
 
-        public void SaveData(DataWriter s)
+        public void SaveData()
         {
             //Do nothing
         }

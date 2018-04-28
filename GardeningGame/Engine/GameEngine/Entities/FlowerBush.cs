@@ -11,16 +11,15 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
 {
     public class FlowerBush : Entity
     {
-        int FlowerBushType;
         public override byte Size { get => (byte)PlantSize.Flower; }
         public FlowerBush(ref Dictionary<string, List<Model>> Lists)
         {
-            FlowerBushType = Utils.RNG.Next(Lists["FlowerBushes"].Count);
+            Kind = Utils.RNG.Next(Lists["FlowerBushes"].Count);
             Rotation.Y += Utils.RNG.Next(360);
         }
         public override Model getModel(ref Dictionary<string, List<Model>> Source)
         {
-            return Source["FlowerBushes"][FlowerBushType];
+            return Source["FlowerBushes"][Kind];
         }
         public static new Texture2D Sprite;
 
@@ -31,5 +30,6 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
                 Scales += Offset;
             }
         }
+        public FlowerBush() { }
     }
 }

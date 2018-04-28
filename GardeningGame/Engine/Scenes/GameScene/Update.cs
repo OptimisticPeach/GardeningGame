@@ -70,10 +70,10 @@ namespace GardeningGame.Engine.Scenes.Game
                                 Entities.Flower flower = new Entities.Flower(ref OrderedModels);
                                 flower.Position = newTiles[i, j].GenPositionForEntity(flower, GSV, ref OrderedModels);
                                 flower.ScaleObject(new Vector3(1f));
-                                newTiles[i, j].Add(flower);
+                                newTiles[i, j].EntityList.Add(flower);
                             }
 
-                            newTiles[i, j].Add(shrub);
+                            newTiles[i, j].EntityList.Add(shrub);
 
                             newTiles[i, j].Terrain = new Terrain.DirtPatch(PrimitivesEffect);
 
@@ -171,14 +171,14 @@ namespace GardeningGame.Engine.Scenes.Game
                 Selector.Update();
                 if (PreviousMouseState.LeftButton == ButtonState.Pressed && MS.LeftButton == ButtonState.Released)
                 {
-                    CurrentColorUnderMouse = Utils.TextureTo2DArray(SelectionBackBuffer)[MS.X, MS.Y];
+                    CurrentColorUnderMouse = Utils.getColorAt(SelectionBackBuffer, MS.X, MS.Y);
                     foreach (var b in Tiles)
                     {
                         if (b.Terrain.ID == CurrentColorUnderMouse)
                         {
                             Selector.Entity.Position = b.GenPositionForEntity(Selector.Entity, GSV, ref OrderedModels);
                             Selector.Entity.ScaleObject(new Vector3(1f));
-                            b.Add(Selector.Entity);
+                            b.EntityList.Add(Selector.Entity);
                         }
                     }
                     Selector = null;

@@ -35,25 +35,22 @@ namespace GardeningGame.Engine.Scenes.Common
             float xDistortion = generateOffset(vertex.X, vertex.Z, 0.2f, 0.1f);
             float yDistortion = generateOffset(vertex.X, vertex.Z, 0.8f, 0.95f);
             float zDistortion = generateOffset(vertex.X, vertex.Z, 0.15f, 0.2f);
-            return vertex + new Vector3(xDistortion * 1.5f, yDistortion * 1.5f, zDistortion * 1.5f);
+            vertex.X += xDistortion;
+            vertex.Y += yDistortion;
+            vertex.Z += zDistortion;
+            return vertex;
         }
 
         public static float Map(float n, float start1, float stop1, float start2, float stop2)
         {
             return ((n - start1) / (stop1 - start1)) * (stop2 - start2) + start2;
         }
-
-        public static Color[,] TextureTo2DArray(Texture2D texture)
+        
+        public static Color getColorAt(Texture2D texture, int x, int y)
         {
-            Color[] colorsOne = new Color[texture.Width * texture.Height]; //The hard to read,1D array
-            texture.GetData(colorsOne); //Get the colors and add them to the array
-
-            Color[,] colorsTwo = new Color[texture.Width, texture.Height]; //The new, easy to read 2D array
-            for (int x = 0; x < texture.Width; x++) //Convert!
-                for (int y = 0; y < texture.Height; y++)
-                    colorsTwo[x, y] = colorsOne[x + y * texture.Width];
-
-            return colorsTwo; //Done!
+            Color[] temp = new Color[1];
+            texture.GetData(temp, x + y * texture.Width, 1);
+            return temp[0];
         }
 
         public class ModelList
@@ -309,31 +306,37 @@ namespace GardeningGame.Engine.Scenes.Common
         {
             for (int i = 0; i < verts.Count() - 2; i += 3)
             {
-                VertexPositionColorNormal vpcn1 = verts[i];
-                VertexPositionColorNormal vpcn2 = verts[i + 1];
-                VertexPositionColorNormal vpcn3 = verts[i + 2];
-
-                Vector3 v1 = vpcn2.Position - vpcn1.Position;
-                Vector3 v2 = vpcn3.Position - vpcn1.Position;
-                Vector3 normal = Vector3.Cross(v1, v2);
+                Vector3 normal = Vector3.Cross(verts[i + 1].Position - verts[i].Position, verts[i + 2].Position - verts[i].Position);
 
                 normal.Normalize();
 
-                vpcn1.Normal = normal;
-                vpcn2.Normal = normal;
-                vpcn3.Normal = normal;
-
-                verts[i] = vpcn1;
-                verts[i + 1] = vpcn2;
-                verts[i + 2] = vpcn3;
+                verts[i].Normal = normal;
+                verts[i + 1].Normal = normal;
+                verts[i + 2].Normal = normal;
             }
-        }
+           // 
+           //  for (int i = 0; i < verts.Count() - 2; i += 3)
+           // {
+           //     VertexPositionColorNormal vpcn1 = verts[i];
+           //     VertexPositionColorNormal vpcn2 = verts[i + 1];
+           //     VertexPositionColorNormal vpcn3 = verts[i + 2];
 
-        public static void DrawTextCentered(SpriteFont font, SpriteBatch spriteBatch, Vector2 Position, string Text, Color colour)
-        {
-            Vector2 Size = font.MeasureString(Text);
-            Position -= Size * 0.5f;
-            spriteBatch.DrawString(font, Text, Position, colour);
+           //     Vector3 v1 = vpcn2.Position - vpcn1.Position;
+           //     Vector3 v2 = vpcn3.Position - vpcn1.Position;
+           //     Vector3 normal = Vector3.Cross(v1, v2);
+
+           //     normal.Normalize();
+
+           //     vpcn1.Normal = normal;
+           //     vpcn2.Normal = normal;
+           //     vpcn3.Normal = normal;
+
+           //     verts[i] = vpcn1;
+           //     verts[i + 1] = vpcn2;
+           //     verts[i + 2] = vpcn3;
+           // }
+           //
+             
         }
 
         public static Color GetAccent()

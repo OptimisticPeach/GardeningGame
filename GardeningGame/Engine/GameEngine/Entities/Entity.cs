@@ -34,6 +34,7 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
         public Vector3 Position = new Vector3(0);
         public Vector3 Rotation = new Vector3(0);
         public Vector3 Scales = new Vector3(1);
+        public int Kind;
         public object Tag;
 
         public abstract Model getModel(ref Dictionary<string, List<Model>> Source);
@@ -104,7 +105,35 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
             var Z = Math.Max(Min, Math.Min(Max, Offset.Z + Scales.Z));
             Scales = new Vector3(X, Y, Z);
         }
-
+        public virtual MockEntity toMockEntity()
+        {
+            return new MockEntity()
+            {
+                Position = Position,
+                Rotation = Rotation,
+                Scales = Scales,
+                Tag = Kind,
+                TypeOfEntity = GetType().AssemblyQualifiedName
+            };
+        }
         public static Texture2D Sprite;
+    }
+    [Serializable]
+    public class MockEntity
+    {
+        public Common.Vector3Serializable Position;
+        public Common.Vector3Serializable Rotation;
+        public Common.Vector3Serializable Scales;
+        public int Tag;
+        public string TypeOfEntity;
+        public Entity toEntity()
+        {
+            Entity E = (Entity)Activator.CreateInstance(Type.GetType(TypeOfEntity));
+            E.Kind = Tag;
+            E.Rotation = Rotation;
+            E.Position = Position;
+            E.Scales = Scales;
+            return E;
+        }
     }
 }

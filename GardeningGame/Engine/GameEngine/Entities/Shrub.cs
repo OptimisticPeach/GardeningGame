@@ -11,10 +11,9 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
 {
     public class Shrub : Entity
     {
-        int ShrubType;
         public Shrub(ref Dictionary<string, List<Model>> Lists)
         {
-            ShrubType = Utils.RNG.Next(Lists["RandomPlants"].Count);
+            Kind = Utils.RNG.Next(Lists["RandomPlants"].Count);
             Rotation.Y += Utils.RNG.Next(360);
         }
 
@@ -24,8 +23,9 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
 
         public override Model getModel(ref Dictionary<string, List<Model>> Source)
         {
-            return Source["RandomPlants"][ShrubType];
+            return Source["RandomPlants"][Kind];
         }
         public static new Texture2D Sprite;
+        public Shrub() { }
     }
 }

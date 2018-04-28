@@ -11,17 +11,18 @@ namespace GardeningGame.Engine.Scenes.Game.Entities
 {
     public class Reed : Entity
     {
-        int ReedType;
         public override byte Size { get => (byte)PlantSize.Flower; }
         public Reed(ref Dictionary<string, List<Model>> Lists)
         {
-            ReedType = Utils.RNG.Next(Lists["Reeds"].Count);
+            Kind = Utils.RNG.Next(Lists["Reeds"].Count);
             Rotation.Y += Utils.RNG.Next(360);
         }
         public override Model getModel(ref Dictionary<string, List<Model>> Source)
         {
-            return Source["Reeds"][ReedType];
+            return Source["Reeds"][Kind];
         }
         public static new Texture2D Sprite;
+
+        public Reed() { }
     }
 }

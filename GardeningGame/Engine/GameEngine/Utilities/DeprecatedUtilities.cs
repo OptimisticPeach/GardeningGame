@@ -12,6 +12,7 @@ namespace GardeningGame.Engine.Scenes.Game
 {
     public static class DeprecatedUtilities
     {
+        [Obsolete]
         public static IEnumerable<VertexPositionColorNormal> getTris(VertexPositionColorNormal[] source, int Depth, int Width)
         {
             VertexPositionColorNormal[,] Data = new VertexPositionColorNormal[Width, Depth]; //The new, easy to read 2D array
@@ -59,6 +60,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
         }
 
+        [Obsolete]
         public static IEnumerable<VertexPositionColorNormal> getTris(VertexPositionColorNormal[,] source, int Depth, int Width)
         {
 
@@ -102,6 +104,7 @@ namespace GardeningGame.Engine.Scenes.Game
         }
 
 
+        [Obsolete]
         public static IEnumerable<VertexPositionColorNormal> getTrisAlternatingOld(VertexPositionColorNormal[,] source, int Depth, int Width)
         {
             var result = new List<VertexPositionColorNormal>();
@@ -162,6 +165,7 @@ namespace GardeningGame.Engine.Scenes.Game
             return result;
         }
 
+        [Obsolete]
         public static IEnumerable<VertexPositionColorNormal> getTrisAlternatingOld(VertexPositionColorNormal[] Data, int Depth, int Width)
         {
             VertexPositionColorNormal[,] source = new VertexPositionColorNormal[Width, Depth]; //The new, easy to read 2D array
@@ -226,6 +230,7 @@ namespace GardeningGame.Engine.Scenes.Game
             return result;
         }
 
+        [Obsolete]
         public static Model toModel(VertexBuffer vb, IndexBuffer ib, Effect effect, GraphicsDevice gd)
         {
             ModelMeshPart meshPart = new ModelMeshPart();
@@ -250,9 +255,24 @@ namespace GardeningGame.Engine.Scenes.Game
             return returnval;
         }
 
+        [Obsolete]
         public static T getRandom<T>(IEnumerable<T> source)
         {
             return source.ToArray()[Utils.RNG.Next(source.Count() - 1)];
+        }
+
+        [Obsolete("Use getColorAt instead", true)]
+        public static Color[,] TextureTo2DArray(Texture2D texture)
+        {
+            Color[] colorsOne = new Color[texture.Width * texture.Height]; //The hard to read,1D array
+            texture.GetData(colorsOne); //Get the colors and add them to the array
+
+            Color[,] colorsTwo = new Color[texture.Width, texture.Height]; //The new, easy to read 2D array
+            for (int x = 0; x < texture.Width; x++) //Convert!
+                for (int y = 0; y < texture.Height; y++)
+                    colorsTwo[x, y] = colorsOne[x + y * texture.Width];
+
+            return colorsTwo; //Done!
         }
     }
 }

@@ -8,6 +8,7 @@ using GardeningGame.Engine.Scenes.Common;
 
 namespace GardeningGame.Engine.Scenes.Game
 {
+    [Serializable]
     public class GameSceneVariables
     {
         #region Public Non-Static Variables

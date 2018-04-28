@@ -12,19 +12,11 @@ namespace GardeningGame.Engine.Scenes.Game
 {
     public class PlantTile
     {
-        private List<Entity> _internalEntityList = new List<Entity>();
-        public System.Collections.ObjectModel.ReadOnlyCollection<Entity> EntityList { get => _internalEntityList.AsReadOnly(); }
+        public List<Entity> EntityList = new List<Entity>();
         public Terrain.DirtPatch Terrain;
         public Vector3 Position;
         public Vector3 OldPosition;
         public Vector3 NewPosition;
-        public Rectangle AlphaChangingArea; 
-        public Model TerrainModel;
-        
-        public void Add(Entity entity)
-        {
-            _internalEntityList.Add(entity);
-        }
 
         public Vector3 GenPositionForEntity(Entity NewEntity, GameSceneVariables GSV, ref Dictionary<string, List<Model>> sourceForModels)
         {
@@ -34,5 +26,31 @@ namespace GardeningGame.Engine.Scenes.Game
         }
         
         public PlantTile() { }
+        public MockPlantTile GetMockPlantTile()
+        {
+            return new MockPlantTile()
+            {
+                Position = Position,
+                EntityList = EntityList.Select((a)=>a.toMockEntity()).ToList()
+            };
+        }
     }
+    /// <summary>
+    /// Used for saving to disk
+    /// </summary>
+    [Serializable]
+    public class MockPlantTile
+    {
+        public List<MockEntity> EntityList;
+        public Vector3Serializable Position;
+        public static implicit operator PlantTile(MockPlantTile source)
+        {
+            return new PlantTile()
+            {
+                EntityList = source.EntityList.Select((a)=>a.toEntity()).ToList(),
+                Position = source.Position
+            };
+        }
+    }
+
 }

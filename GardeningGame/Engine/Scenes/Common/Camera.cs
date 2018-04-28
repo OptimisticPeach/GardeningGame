@@ -44,7 +44,7 @@ namespace GardeningGame.Engine.Scenes.Common
             Position.X = Radius * (float)Math.Cos(angle);
             Position.Y = Height;
             Position.Z = Radius * (float)Math.Sin(angle);
-            if(setY)
+            if (setY)
                 Target.Y = Height;
         }
 
@@ -52,7 +52,7 @@ namespace GardeningGame.Engine.Scenes.Common
         {
             Rotation += r;
             //_rotation %= 8;
-            Rotation = Utils.mod(Rotation, 8);
+            Rotation = Utils.mod(Rotation, MathHelper.TwoPi);
             setPosition(setY);
         }
 
