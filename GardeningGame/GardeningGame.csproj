@@ -66,15 +66,17 @@
   <ItemGroup>
     <Compile Include="Engine\DataLoader.cs" />
     <Compile Include="Engine\DataObjects\GameDataObject.cs" />
+    <Compile Include="Engine\GameEngine\GameCam.cs" />
     <Compile Include="Engine\GameEngine\Utilities\Vector3Serializable.cs" />
     <Compile Include="Engine\Scenes\Common\Debug.cs" />
     <Compile Include="Engine\Scenes\Common\Extensions.cs" />
-    <Compile Include="Engine\Scenes\GameScene\Draw.cs" />
+    <Compile Include="Engine\Scenes\Common\Camera.cs" />
+    <Compile Include="Engine\Scenes\GameScene\GameDraw.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameScene.cs" />
-    <Compile Include="Engine\Scenes\GameScene\Update.cs" />
-    <Compile Include="Engine\Scenes\LevelScene\Draw.cs" />
+    <Compile Include="Engine\Scenes\GameScene\GameUpdate.cs" />
+    <Compile Include="Engine\Scenes\LevelScene\LevelSelectDraw.cs" />
     <Compile Include="Engine\Scenes\LevelScene\LevelSelectScene.cs" />
-    <Compile Include="Engine\Scenes\LevelScene\Update.cs" />
+    <Compile Include="Engine\Scenes\LevelScene\LevelSelectUpdate.cs" />
     <Compile Include="Engine\Scenes\Scene.cs" />
     <Compile Include="Engine\GameEngine\UI\SwingingSelector.cs" />
     <Compile Include="Engine\GameEngine\UI\ButonState.cs" />
@@ -89,7 +91,7 @@
     <Compile Include="Engine\GameEngine\Terrain\DirtPatch.cs" />
     <Compile Include="Engine\GameEngine\Terrain\Terrain.cs" />
     <Compile Include="Engine\GameEngine\Terrain\Water.cs" />
-    <Compile Include="Engine\Scenes\Common\Camera.cs" />
+    <Compile Include="Engine\Scenes\LevelScene\LevelSelectCam.cs" />
     <Compile Include="Engine\Main.cs" />
     <Compile Include="Engine\GameEngine\Entities\Bush.cs" />
     <Compile Include="Engine\GameEngine\Entities\Entity.cs" />

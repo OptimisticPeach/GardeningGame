@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace GardeningGame.Engine.DataObjects
 {
     [Serializable]
-    public struct GameDataObject
+    public class GameDataObject
     {
         public Scenes.Game.GameSceneVariables GameSceneVariables;
         public Scenes.Game.MockPlantTile[,] Tiles;

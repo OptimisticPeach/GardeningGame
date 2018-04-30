@@ -78,13 +78,16 @@ namespace GardeningGame.Engine
                         CurrentScene.Initialize(Graphics);
                         break;
                     case SceneType.LevelSelect:
+                        SelectScene = null;
+                        SelectScene = new Scenes.LevelSelect.LevelSelectScene();
+                        SelectScene.OnRequestedSceneChanged += ChangeScene;
                         CurrentScene = SelectScene;
                         if (!CurrentScene.ContentLoaded)
                             CurrentScene.LoadContent(Content);
                         CurrentScene.Initialize(Graphics);
                         break;
                 }
-                Delta = 1f;
+                Delta = 10f;
             }
         }
 
@@ -120,9 +123,9 @@ namespace GardeningGame.Engine
 
             if (true)
             {
-                Scenes.Common.RotatingCam.spriteBatch.Begin();
-                Scenes.Common.RotatingCam.spriteBatch.DrawString(Debug.DebugFont, Delta.ToString(), new Vector2(100, 100), Color.DarkSalmon);
-                Scenes.Common.RotatingCam.spriteBatch.End();
+                Scenes.Common.Camera.SpriteBatch.Begin();
+                Scenes.Common.Camera.SpriteBatch.DrawString(Debug.DebugFont, Delta.ToString(), new Vector2(100, 100), Color.DarkSalmon);
+                Scenes.Common.Camera.SpriteBatch.End();
             }
 
             base.Draw(gameTime);
@@ -142,7 +145,7 @@ namespace GardeningGame.Engine
             CurrentScene.Update(gameTime, ms, KeyBoardState);
 
             if (Delta > 0)
-                Delta -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Delta--;
 
             base.Update(gameTime);
 

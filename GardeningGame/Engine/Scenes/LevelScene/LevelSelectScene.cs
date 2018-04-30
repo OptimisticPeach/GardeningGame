@@ -34,6 +34,8 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
         public bool ContentLoaded { get; set; }
 
+        SelectCam Cam = new SelectCam();
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -70,7 +72,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 2000, 100, true, 1400);
+            Cam.Initialize(Graphics.GraphicsDevice, 2000, 100, true, 1400);
 
             Graphics.GraphicsDevice.Clear(Color.AliceBlue);
 
@@ -82,7 +84,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 }
             }
 
-            RotatingCam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
+            Cam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
 
             SBBData = new Color[SelectionBackBuffer.Height * SelectionBackBuffer.Width];
         }

@@ -28,11 +28,11 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
             //var ScreenBackBuffe= Utils.CreateWobble(ScreenBackBuffer, gameTime);
 
-            RotatingCam.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
+            Camera.SpriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend,
                 SamplerState.LinearClamp, DepthStencilState.Default,
                 RasterizerState.CullNone);
 
-            RotatingCam.spriteBatch.Draw(ScreenOrSelection ? SelectionBackBuffer : ScreenBackBuffer, new Rectangle(0, 0, Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
+            Camera.SpriteBatch.Draw(ScreenOrSelection ? SelectionBackBuffer : ScreenBackBuffer, new Rectangle(0, 0, Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
                 Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             
             
@@ -52,13 +52,13 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
 
                 //var LastTreeBushEffectDiffColour = new Color(((BasicEffect)LTree.Meshes["L10"].Effects.First()).DiffuseColor);
                 var LastTreeBushEffectDiffColour = LTree.Meshes["L10"].Tag;
-                RotatingCam.spriteBatch.DrawString(Debug.DebugFont,
+                Camera.SpriteBatch.DrawString(Debug.DebugFont,
                     String.Format(
                         Debug.Debugstring,
                         CurrentColorUnderMouse,0,0,
-                        RotatingCam.Height,
-                        RotatingCam.Radius,
-                        RotatingCam.Rotation,
+                        Cam.Height,
+                        Cam.Radius,
+                        Cam.Rotation,
                         Start.X,Start.Y,Start.Z,
                         //LastTreeBushEffectDiffColour.R,
                         //LastTreeBushEffectDiffColour.G,
@@ -69,7 +69,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                     Debug.Position, Color.Black);
             }
 
-            RotatingCam.spriteBatch.End();
+            Camera.SpriteBatch.End();
         }
 
         Matrix[] LTreeTransForms;
@@ -108,9 +108,9 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                         effect.FogEnabled = false;
                         effect.VertexColorEnabled = false;
                         effect.DiffuseColor = (Vector3)Mesh.Tag; //1, 1, 1 by default
-                        effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                        effect.View = Cam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                            //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                        effect.Projection = RotatingCam.projectionMatrix;
+                        effect.Projection = Cam.projectionMatrix;
 
                         effect.World = LTreeTransForms[Mesh.ParentBone.Index];
                         //effect.World = SmartGardenCamera.worldMatrix;
@@ -142,9 +142,9 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                     //effect.SpecularColor = new Vector3(1);
                     effect.AmbientLightColor = new Vector3(0.35f);
 
-                    effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                    effect.View = Cam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                        //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                    effect.Projection = RotatingCam.projectionMatrix;
+                    effect.Projection = Cam.projectionMatrix;
                     effect.World = LTreeTransForms[Mesh.ParentBone.Index];
                     //effect.World = SmartGardenCamera.worldMatrix;
                 }
@@ -164,9 +164,9 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                             //effect.SpecularColor = new Vector3(1);
                             effect.AmbientLightColor = new Vector3(1, 0, 0);
 
-                            effect.View = RotatingCam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
+                            effect.View = Cam.viewMatrix; //* Matrix.CreateRotationX(MathHelper.ToRadians(offset.Y));
                                                                   //effect.View *= Matrix.CreateRotationY(MathHelper.ToRadians(offset.X));
-                            effect.Projection = RotatingCam.projectionMatrix;
+                            effect.Projection = Cam.projectionMatrix;
 
                             effect.World = LTreeTransForms[Mesh.ParentBone.Index];
                             //effect.World = SmartGardenCamera.worldMatrix;

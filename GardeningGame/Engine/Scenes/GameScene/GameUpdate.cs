@@ -75,7 +75,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
                             newTiles[i, j].EntityList.Add(shrub);
 
-                            newTiles[i, j].Terrain = new Terrain.DirtPatch(PrimitivesEffect);
+                            newTiles[i, j].Terrain = new Terrain.DirtPatch();
 
                             newTiles[i, j].Terrain.Generate(GSV.TerrainDepth, GSV.TerrainWidth, GSV.TerrainPointSpacing, Graphics.GraphicsDevice);
                         }
@@ -150,7 +150,7 @@ namespace GardeningGame.Engine.Scenes.Game
             {
                 if (MS.LeftButton == ButtonState.Pressed)
                 {
-                    RotatingCam.Rotate(Utils.Map(
+                    Cam.Rotate(Utils.Map(
                         ((MS.X - PreviousMouseState.X) + (PreviousMouseState.X - PreviousMouseState2.X)) / 2,
                         -200, 200, -1, 1
                         ), false);
@@ -193,7 +193,7 @@ namespace GardeningGame.Engine.Scenes.Game
             {
                 var N = (1f / (200f * SpeedInterpolation)) * Interpolation;
 
-                RotatingCam.Rotate(MathHelper.Lerp(0, SpeedInterpolation, N), false);
+                Cam.Rotate(MathHelper.Lerp(0, SpeedInterpolation, N), false);
                 if (Interpolation > 0)
                 {
                     Interpolation--;

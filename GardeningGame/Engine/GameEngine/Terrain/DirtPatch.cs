@@ -12,8 +12,8 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
 {
     public class DirtPatch : Terrain
     {
-        public DirtPatch(BasicEffect effect)
-            : base(effect)
+        public DirtPatch()
+            : base()
         {
         }
 

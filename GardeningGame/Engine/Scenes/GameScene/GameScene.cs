@@ -40,6 +40,8 @@ namespace GardeningGame.Engine.Scenes.Game
 
         BasicEffect PrimitivesEffect;
 
+        GameCam Cam = new GameCam();
+
         Dictionary<string, List<Model>> OrderedModels = new Dictionary<string, List<Model>>();
 
         public bool ContentLoaded { get; set; }
@@ -86,8 +88,10 @@ namespace GardeningGame.Engine.Scenes.Game
                 {
                     for (int y = 0; y < GSV.PlantTileCountY; y++)
                     {
-                        Tiles[x, y] = new PlantTile();
-                        Tiles[x, y].Position = new Vector3(((x * GSV.spacingX)) - (GSV.spacingX * 0.5f * GSV.PlantTileCountX), 0, ((y * GSV.spacingY)) - (GSV.spacingY * 0.5f * GSV.PlantTileCountY));
+                        Tiles[x, y] = new PlantTile
+                        {
+                            Position = new Vector3(((x * GSV.spacingX)) - (GSV.spacingX * 0.5f * GSV.PlantTileCountX), 0, ((y * GSV.spacingY)) - (GSV.spacingY * 0.5f * GSV.PlantTileCountY))
+                        };
 
                         Entities.Bush shrub = new Entities.Bush(ref OrderedModels);
                         //bush.Position = new Vector3(Utils.RNG.Next((int)(0.2f * Consts.spacing), (int)(0.8f * Consts.spacing)), 0, Utils.RNG.Next((int)(0.2f * Consts.spacing), (int)(0.8f * Consts.spacing)));
@@ -103,7 +107,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
                         Tiles[x, y].EntityList.Add(shrub);
 
-                        Tiles[x, y].Terrain = new Terrain.DirtPatch(PrimitivesEffect);
+                        Tiles[x, y].Terrain = new Terrain.DirtPatch();
 
                         Tiles[x, y].Terrain.Generate(GSV.TerrainDepth, GSV.TerrainWidth, GSV.TerrainPointSpacing, Graphics.GraphicsDevice);
                     }
@@ -113,7 +117,7 @@ namespace GardeningGame.Engine.Scenes.Game
             ////////////Water////////////
 
 
-            Water = new Terrain.Water(PrimitivesEffect);
+            Water = new Terrain.Water();
 
             Water.GenerateCircle(GSV.WaterSize, GSV.WaterSize, GSV.WaterPointSpacing, GSV.WaterRadius, Graphics.GraphicsDevice);
 
@@ -126,11 +130,12 @@ namespace GardeningGame.Engine.Scenes.Game
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
 
-            Common.RotatingCam.Initialize(Graphics.GraphicsDevice, 1200, 800, false, 1400);
+            Cam.Initialize(Graphics.GraphicsDevice, 1200, 800, false, 1400);
 
             Graphics.GraphicsDevice.Clear(GameSceneVariables.clearColor);
 
             OnRequestedSceneChanged += GameScene_OnRequestedSceneChanged;
+            Cam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
         }
 
         private void GameScene_OnRequestedSceneChanged(Scene Sender, SceneType TypeToSwitchTo, EventArgs args)
@@ -143,7 +148,7 @@ namespace GardeningGame.Engine.Scenes.Game
         {
             if (File.Exists("Game_Data.dat"))
             {
-                var gamedata = GameIO.ReadFromBinaryFile<DataObjects.GameDataObject>("Game_Data.dat");
+                var gamedata = GameIO.ReadFromJsonFile<DataObjects.GameDataObject>("Game_Data.dat");
                 CouldLoadFile = true;
                 GSV = gamedata.GameSceneVariables;
                 Tiles = new PlantTile[gamedata.Tiles.GetLength(0), gamedata.Tiles.GetLength(1)];
@@ -152,7 +157,7 @@ namespace GardeningGame.Engine.Scenes.Game
                     for (int j = 0; j != gamedata.Tiles.GetLength(1); j++)
                     {
                         Tiles[i, j] = gamedata.Tiles[i, j];
-                        Tiles[i, j].Terrain = new Terrain.DirtPatch(PrimitivesEffect);
+                        Tiles[i, j].Terrain = new Terrain.DirtPatch();
                         Tiles[i, j].Terrain.Generate(GSV.TerrainDepth, GSV.TerrainWidth, GSV.TerrainPointSpacing, Graphics.GraphicsDevice);
                     }
                 }
@@ -161,7 +166,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
         public void SaveData()
         {
-            GameIO.WriteToBinaryFile("Game_Data.dat", GetGameDataObject());
+            GameIO.WriteToJsonFile("Game_Data.dat", GetGameDataObject());
         }
 
         /// <summary>
@@ -217,7 +222,6 @@ namespace GardeningGame.Engine.Scenes.Game
             Entities.Reed.Sprite = Content.Load<Texture2D>(@"GUI\Reed");
             Entities.Shrub.Sprite = Content.Load<Texture2D>(@"GUI\Shrub");
             Entities.FlowerBush.Sprite = Content.Load<Texture2D>(@"GUI\FlowerBush");
-
             ContentLoaded = true;
         }
 
