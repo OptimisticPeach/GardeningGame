@@ -6,29 +6,23 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GardeningGame.Engine.Scenes.LevelSelect
+namespace GardeningGame.Engine.Scenes.Common
 {
-    public class SelectCam : Common.Camera
+
+    public static class RotatingCam
     {
-        public int SWidth;
-        public int SHeight;
+        public static int SWidth;
+        public static int SHeight;
 
-        public float Height;
+        public static float Height;
 
-        public float Radius;
+        public static float Radius;
 
-        public void Initialize(GraphicsDevice gd, float radius, float near, bool setY, float Height)
+        public static void Initialize(GraphicsDevice gd, float radius, float near, bool setY, float Height)
         {
             Radius = radius;
-            this.Height = Height;
-            if (Target != null)
-            {
-                Target.X = 0;
-                Target.Y = 0;
-                Target.Z = 0;
-            }
-            else
-                Target = new Vector3(0);
+            RotatingCam.Height = Height;
+            Target = new Vector3(0, 0, 0);
             SWidth = gd.PresentationParameters.BackBufferWidth;
             SHeight = gd.PresentationParameters.BackBufferHeight;
             var Max = Math.Max(SWidth, SHeight);
@@ -40,11 +34,11 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 near, 3821f);
             worldMatrix = Matrix.CreateWorld(new Vector3(0, 0, 0), Vector3.
                           Forward, Vector3.Up);
-            SpriteBatch = new SpriteBatch(gd);
+            spriteBatch = new SpriteBatch(gd);
             setPosition(setY);
         }
 
-        public void setPosition(bool setY)
+        public static void setPosition(bool setY)
         {
             double angle = Rotation;
             Position.X = Radius * (float)Math.Cos(angle);
@@ -54,16 +48,33 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 Target.Y = Height;
         }
 
-        public void Rotate(float r, bool setY)
+        public static void Rotate(float r, bool setY)
         {
             Rotation += r;
             //_rotation %= 8;
-            //Rotation = Common.Utils.mod(Rotation, MathHelper.TwoPi);
-            Rotation = MathHelper.WrapAngle(Rotation);
+            Rotation = Utils.mod(Rotation, MathHelper.TwoPi);
             setPosition(setY);
         }
 
+        public static float Rotation = 0f;
 
-        public float Rotation = 0f;
+        public static SpriteBatch spriteBatch;
+
+        public static BasicEffect PrimitivesEffect;
+
+        //Camera
+        public static Vector3 Target;
+        public static Vector3 Position;
+
+        public static Matrix projectionMatrix;
+        public static Matrix viewMatrix
+        {
+            get
+            {
+                return Matrix.CreateLookAt(Position, Target,
+                         Vector3.Up);                                   //////////////////???????????????????????????
+            }
+        }
+        public static Matrix worldMatrix;
     }
 }

@@ -66,11 +66,18 @@
   <ItemGroup>
     <Compile Include="Engine\DataLoader.cs" />
     <Compile Include="Engine\DataObjects\GameDataObject.cs" />
+    <Compile Include="Engine\GameEngine\Effects\PrimitiveEffect.cs" />
     <Compile Include="Engine\GameEngine\GameCam.cs" />
+    <Compile Include="Engine\GameEngine\PrimitiveEffect.cs" />
+    <Compile Include="Engine\GameEngine\Terrain\DirtPatch.cs" />
+    <Compile Include="Engine\GameEngine\Terrain\Terrain.cs" />
+    <Compile Include="Engine\GameEngine\Terrain\Water.cs" />
+    <None Include="Engine\GameEngine\Utilities\Camera.cs" />
     <Compile Include="Engine\GameEngine\Utilities\Vector3Serializable.cs" />
     <Compile Include="Engine\Scenes\Common\Debug.cs" />
     <Compile Include="Engine\Scenes\Common\Extensions.cs" />
     <Compile Include="Engine\Scenes\Common\Camera.cs" />
+    <Compile Include="Engine\Scenes\Common\Utils.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameDraw.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameScene.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameUpdate.cs" />
@@ -88,9 +95,6 @@
     <Compile Include="Engine\GameEngine\UI\UserInterface.cs" />
     <Compile Include="Engine\GameEngine\Entities\FlowerBush.cs" />
     <Compile Include="Engine\GameEngine\Entities\Reed.cs" />
-    <Compile Include="Engine\GameEngine\Terrain\DirtPatch.cs" />
-    <Compile Include="Engine\GameEngine\Terrain\Terrain.cs" />
-    <Compile Include="Engine\GameEngine\Terrain\Water.cs" />
     <Compile Include="Engine\Scenes\LevelScene\LevelSelectCam.cs" />
     <Compile Include="Engine\Main.cs" />
     <Compile Include="Engine\GameEngine\Entities\Bush.cs" />
@@ -103,7 +107,6 @@
     <Compile Include="Engine\GameEngine\PlantTile.cs" />
     <Compile Include="Engine\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Engine\Scenes\Common\Utils.cs" />
     <Compile Include="Engine\GameEngine\Utilities\VertexPositionColorNormal.cs" />
   </ItemGroup>
   <ItemGroup>

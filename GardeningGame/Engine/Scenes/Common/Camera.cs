@@ -19,7 +19,7 @@ namespace GardeningGame.Engine.Scenes.Common
         public Vector3 Position;
 
         public Matrix projectionMatrix { get; protected set; }
-        public Matrix viewMatrix { get; protected set; }
+        public Matrix viewMatrix { get => Matrix.CreateLookAt(Position, Target, Vector3.Up); }
         public Matrix worldMatrix { get; protected set; }
     }
 }

@@ -32,6 +32,8 @@ namespace GardeningGame.Engine.Scenes.Game
 
         PlantTile[,] Tiles;
 
+        Effect PEffect;
+
         Terrain.Water Water;
 
         UI.SwingingSelector Selector;
@@ -132,7 +134,9 @@ namespace GardeningGame.Engine.Scenes.Game
 
             Cam.Initialize(Graphics.GraphicsDevice, 1200, 800, false, 1400);
 
-            Graphics.GraphicsDevice.Clear(GameSceneVariables.clearColor);
+            Graphics.GraphicsDevice.Clear(clearColor);
+
+            Graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
             OnRequestedSceneChanged += GameScene_OnRequestedSceneChanged;
             Cam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
@@ -146,9 +150,9 @@ namespace GardeningGame.Engine.Scenes.Game
         bool CouldLoadFile = false;
         public void LoadData()
         {
-            if (File.Exists("Game_Data.dat"))
+            if (File.Exists("Game_Data.json"))
             {
-                var gamedata = GameIO.ReadFromJsonFile<DataObjects.GameDataObject>("Game_Data.dat");
+                var gamedata = GameIO.ReadFromJsonFile<DataObjects.GameDataObject>("Game_Data.json");
                 CouldLoadFile = true;
                 GSV = gamedata.GameSceneVariables;
                 Tiles = new PlantTile[gamedata.Tiles.GetLength(0), gamedata.Tiles.GetLength(1)];
@@ -166,7 +170,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
         public void SaveData()
         {
-            GameIO.WriteToJsonFile("Game_Data.dat", GetGameDataObject());
+            GameIO.WriteToJsonFile("Game_Data.json", GetGameDataObject());
         }
 
         /// <summary>
@@ -222,6 +226,8 @@ namespace GardeningGame.Engine.Scenes.Game
             Entities.Reed.Sprite = Content.Load<Texture2D>(@"GUI\Reed");
             Entities.Shrub.Sprite = Content.Load<Texture2D>(@"GUI\Shrub");
             Entities.FlowerBush.Sprite = Content.Load<Texture2D>(@"GUI\FlowerBush");
+
+            PEffect = Content.Load<Effect>("PrimitivesEffect");
             ContentLoaded = true;
         }
 

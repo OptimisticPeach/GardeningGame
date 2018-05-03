@@ -53,7 +53,6 @@ namespace GardeningGame.Engine.Scenes.Game
             if (setY)
                 Target.Y = Height;
         }
-        public new Matrix viewMatrix { get => Matrix.CreateLookAt(Position, Target, Vector3.Up); }
 
         public void Rotate(float r, bool setY)
         {

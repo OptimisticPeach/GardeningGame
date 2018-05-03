@@ -141,8 +141,6 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
 
         public override void Draw(GraphicsDevice GD, Vector3 Position, bool UseID, Camera Cam)
         {
-
-
              Cam.PrimitivesEffect.World = Cam.worldMatrix * Matrix.CreateTranslation(Position);
              Cam.PrimitivesEffect.View = Cam.viewMatrix;
              Cam.PrimitivesEffect.Projection = Cam.projectionMatrix;
@@ -177,7 +175,7 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
 
                  Cam.PrimitivesEffect.DirectionalLight0.SpecularColor = new Vector3(1);
 
-                 Cam.PrimitivesEffect.DirectionalLight0.Direction = Cam.Position * -1f;
+                 Cam.PrimitivesEffect.DirectionalLight0.Direction = new Vector3(-1, -1, -1);
 
                  Cam.PrimitivesEffect.DirectionalLight0.Enabled = true;
 
