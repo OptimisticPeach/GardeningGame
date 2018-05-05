@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <SourceFile>../../../../Content/PrimitivesEffect.fx</SourceFile>
+  <SourceTime>2018-05-04T20:29:59.9238096-04:00</SourceTime>
+  <DestFile>../../../../Content/tempBin/../../../../Content/PrimitivesEffect.xnb</DestFile>
+  <DestTime>2018-05-04T20:30:00.3583825-04:00</DestTime>
+  <Importer>EffectImporter</Importer>
+  <ImporterTime>2018-05-04T16:31:46.4729403-04:00</ImporterTime>
+  <Processor>EffectProcessor</Processor>
+  <ProcessorTime>2018-05-04T16:31:46.4729403-04:00</ProcessorTime>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

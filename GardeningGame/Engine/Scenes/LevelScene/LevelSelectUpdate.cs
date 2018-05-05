@@ -58,7 +58,7 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
         }
 
 
-        public void Update(GameTime GT, MouseState MS, KeyboardState KS)
+        public void Update(GameTime GT, MouseState MS, KeyboardState KS, bool IsActive)
         {
             //int i = 1;
             //foreach (var b in Tiles)

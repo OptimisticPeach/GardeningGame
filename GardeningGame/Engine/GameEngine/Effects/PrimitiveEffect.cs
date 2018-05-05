@@ -11,34 +11,42 @@ using System.IO;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
-namespace GardeningGame.Engine.GameEngine.Effects
+namespace GardeningGame.Engine.Scenes.Game
 {
     public class PrimitiveEffect
     {
-        
         Effect internalEffect;
         public Effect InternalEffect
         {
             get
             {
-                if(!SetWorldViewProjParams)
+                if (!SetParams)
                 {
                     internalEffect.Parameters["World"].SetValue(World);
                     internalEffect.Parameters["WorldViewProj"].SetValue(World * View * Projection);
                     internalEffect.Parameters["WorldInverseTranspose"].SetValueTranspose(Matrix.Invert(World));
                     internalEffect.Parameters["EyePosition"].SetValue(Matrix.Invert(View).Translation);
-                    SetWorldViewProjParams = true;
+                    internalEffect.Parameters["DiffuseColor"].SetValue(DiffuseColor);
+                    internalEffect.Parameters["EmissiveColor"].SetValue(EmissiveColor);
+                    internalEffect.Parameters["SpecularColor"].SetValue(SpecularColor);
+                    internalEffect.Parameters["SpecularPower"].SetValue(SpecularPower);
+                    internalEffect.Parameters["LightDirection"].SetValue(LightDirection);
+                    internalEffect.Parameters["LightDiffuseColor"].SetValue(LightDiffuseColor);
+                    internalEffect.Parameters["LightSpecularColor"].SetValue(LightSpecularColor);
+                    internalEffect.Parameters["Time"].SetValue((float)DateTime.Now.TimeOfDay.TotalSeconds);
+                    SetFogVector();
+                    SetParams = true;
                 }
                 return internalEffect;
             }
             set
             {
                 internalEffect = value;
-                SetWorldViewProjParams = false;
+                SetParams = false;
             }
         }
 
-        private bool SetWorldViewProjParams = false;
+        private bool SetParams = false;
 
         /*
         float3x3 WorldInverseTranspose; 
@@ -60,19 +68,37 @@ namespace GardeningGame.Engine.GameEngine.Effects
 
         public bool FogEnabled { get; set; }
 
-        private float fogStart;
-        private float fogEnd;
+        private float fogStart = float.PositiveInfinity;
+        private float fogEnd = float.NegativeInfinity;
+        private Vector3 _lightSpecularColor = new Vector3(1);
+        private Vector3 _lightDiffuseColor = new Vector3(1);
+        private Vector3 _lightDirection = new Vector3(1);
+        private float _specularPower = 1;
+        private Vector3 _specularColor = new Vector3(1);
+        private Vector3 _emissiveColor = new Vector3(1);
+        private Vector4 _diffuseColor = new Vector4(1);
+        private Matrix _projection = Matrix.Identity;
+        private Matrix _view = Matrix.Identity;
+        private Matrix _world = Matrix.Identity;
 
-        public float FogEnd { get => fogEnd;
-            set {
+        public float FogEnd
+        {
+            get => fogEnd;
+            set
+            {
                 fogEnd = value;
-                SetFogVector();
-            } }
-        public float FogStart { get => fogStart;
-            set {
+                SetParams = false;
+            }
+        }
+        public float FogStart
+        {
+            get => fogStart;
+            set
+            {
                 fogStart = value;
-                SetFogVector();
-            } }
+                SetParams = false;
+            }
+        }
 
 
         void SetFogVector()
@@ -109,51 +135,156 @@ namespace GardeningGame.Engine.GameEngine.Effects
         }
         #endregion fog
 
+        //public Vector4 DiffuseColor
+        //{
+        //    get => internalEffect.Parameters["DiffuseColor"].GetValueVector4();
+        //    set
+        //    {
+        //        internalEffect.Parameters["DiffuseColor"].SetValue(value);
+        //        SetParams = false;
+        //    }
+        //}
+
+        //public Vector3 EmissiveColor
+        //{
+        //    get => internalEffect.Parameters["EmissiveColor"].GetValueVector3();
+        //    set
+        //    {
+        //        internalEffect.Parameters["EmissiveColor"].SetValue(value);
+        //        SetParams = false;
+        //    }
+        //}
+
+        //public Vector3 SpecularColor
+        //{
+        //    get => internalEffect.Parameters["SpecularColor"].GetValueVector3();
+        //    set
+        //    {
+        //        internalEffect.Parameters["SpecularColor"].SetValue(value);
+        //        SetParams = false;
+        //    }
+        //}
+
+        //public float SpecularPower
+        //{
+        //    get => internalEffect.Parameters["SpecularPower"].GetValueSingle();
+        //    set
+        //    {
+        //        internalEffect.Parameters["SpecularPower"].SetValue(value);
+        //        SetParams = false;
+        //    }
+        //}
+
+        //public Vector3 LightDirection
+        //{
+        //    get => internalEffect.Parameters["LightDirection"].GetValueVector3();
+        //    set
+        //    {
+        //        internalEffect.Parameters["LightDirection"].SetValue(value);
+        //        SetParams = false;
+        //    }
+        //}
+
+        //public Vector3 LightDiffuseColor
+        //{
+        //    get => internalEffect.Parameters["LightDiffuseColor"].GetValueVector3();
+        //    set
+        //    {
+        //        internalEffect.Parameters["LightDiffuseColor"].SetValue(value);
+        //        SetParams = false;
+        //    }
+        //}
+
+        //public Vector3 LightSpecularColor
+        //{
+        //    get => internalEffect.Parameters["LightSpecularColor"].GetValueVector3();
+        //    set
+        //    {
+        //        internalEffect.Parameters["LightSpecularColor"].SetValue(value);
+        //        SetParams = false;
+        //    }
+        //}
+
         public Vector4 DiffuseColor
         {
-            get => internalEffect.Parameters["DiffuseColor"].GetValueVector4();
-            set => internalEffect.Parameters["DiffuseColor"].SetValue(value);
+            get => _diffuseColor; set {
+                _diffuseColor = value;
+                SetParams = false;
+            }
         }
 
         public Vector3 EmissiveColor
         {
-            get => internalEffect.Parameters["EmissiveColor"].GetValueVector3();
-            set => internalEffect.Parameters["EmissiveColor"].SetValue(value);
+            get => _emissiveColor; set
+            {
+                _emissiveColor = value;
+                SetParams = false;
+            }
         }
 
         public Vector3 SpecularColor
         {
-            get => internalEffect.Parameters["SpecularColor"].GetValueVector3();
-            set => internalEffect.Parameters["SpecularColor"].SetValue(value);
+            get => _specularColor; set
+            {
+                _specularColor = value;
+                SetParams = false;
+            }
         }
 
         public float SpecularPower
         {
-            get => internalEffect.Parameters["SpecularPower"].GetValueSingle();
-            set => internalEffect.Parameters["SpecularPower"].SetValue(value);
+            get => _specularPower; set
+            {
+                _specularPower = value;
+                SetParams = false;
+            }
         }
 
         public Vector3 LightDirection
         {
-            get => internalEffect.Parameters["LightDirection"].GetValueVector3();
-            set => internalEffect.Parameters["LightDirection"].SetValue(value);
+            get => _lightDirection; set
+            {
+                _lightDirection = value;
+                SetParams = false;
+            }
         }
 
         public Vector3 LightDiffuseColor
         {
-            get => internalEffect.Parameters["LightDiffuseColor"].GetValueVector3();
-            set => internalEffect.Parameters["LightDiffuseColor"].SetValue(value);
+            get => _lightDiffuseColor; set
+            {
+                _lightDiffuseColor = value;
+                SetParams = false;
+            }
         }
 
         public Vector3 LightSpecularColor
         {
-            get => internalEffect.Parameters["LightSpecularColor"].GetValueVector3();
-            set => internalEffect.Parameters["LightSpecularColor"].SetValue(value);
+            get => _lightSpecularColor; set
+            {
+                _lightSpecularColor = value;
+                SetParams = false;
+            }
         }
 
-        public Matrix Projection { get; set; }
-        public Matrix View { get; set; }
-        public Matrix World { get; set; }
+        public Matrix Projection { get => _projection; set
+            {
+                _projection = value;
+                SetParams = false;
+            }
+        }
+        public Matrix View { get => _view; set
+            {
+                _view = value;
+                SetParams = false;
+            }
+        }
+        public Matrix World { get => _world; set
+            {
+                _world = value;
+                SetParams = false;
+            }
+        }
 
         public static explicit operator Effect(PrimitiveEffect source)
         {

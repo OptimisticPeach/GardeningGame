@@ -79,9 +79,9 @@ namespace GardeningGame.Engine.Scenes.Game
             foreach (var pt in pta)
             {
                 if(pt != null)
-                pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, true, Cam);
+                pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, true, Cam.PEffect, Cam);
             }
-            Water.Draw(Graphics.GraphicsDevice, new Vector3(0), true, Cam);
+            Water.Draw(Graphics.GraphicsDevice, new Vector3(0), true, Cam.PEffect, Cam);
 
             Graphics.GraphicsDevice.SetRenderTarget(null);
         }
@@ -122,11 +122,11 @@ namespace GardeningGame.Engine.Scenes.Game
                     }
 
 
-                    pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, false, Cam);
+                    pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, false, Cam.PEffect, Cam);
                 }
 
             }
-            Water.Draw(Graphics.GraphicsDevice, new Vector3(0), false, Cam);
+            Water.Draw(Graphics.GraphicsDevice, new Vector3(0), false, Cam.PEffect, Cam);
 
             Graphics.GraphicsDevice.SetRenderTarget(null);
         }

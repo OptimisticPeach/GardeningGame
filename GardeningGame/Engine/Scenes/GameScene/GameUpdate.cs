@@ -134,7 +134,7 @@ namespace GardeningGame.Engine.Scenes.Game
         }
 
 
-        public void Update(GameTime GT, MouseState MS, KeyboardState KS)
+        public void Update(GameTime GT, MouseState MS, KeyboardState KS, bool IsActive)
         {
             //int i = 1;
             //foreach (var b in Tiles)
@@ -146,7 +146,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
             updateKeys(GT);
 
-            if (ButtonStatus.DraggedButton == null && ButtonStatus.PreviouslyDraggedButton == null && ButtonStatus.ClickedButton == null && Selector == null)
+            if (ButtonStatus.DraggedButton == null && ButtonStatus.PreviouslyDraggedButton == null && ButtonStatus.ClickedButton == null && Selector == null && IsActive)
             {
                 if (MS.LeftButton == ButtonState.Pressed)
                 {

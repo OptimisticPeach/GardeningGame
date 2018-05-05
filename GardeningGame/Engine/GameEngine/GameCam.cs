@@ -62,6 +62,8 @@ namespace GardeningGame.Engine.Scenes.Game
             setPosition(setY);
         }
 
+        public PrimitiveEffect PEffect = new PrimitiveEffect();
+
         public float Rotation = 0f;
     }
 }

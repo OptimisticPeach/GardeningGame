@@ -12,8 +12,6 @@ namespace GardeningGame.Engine.Scenes.Common
     {
         public static SpriteBatch SpriteBatch;
 
-        public BasicEffect PrimitivesEffect;
-
         //Camera
         public Vector3 Target;
         public Vector3 Position;

@@ -25,7 +25,7 @@ namespace GardeningGame.Engine
         Scenes.Game.GameScene GameScene = new Scenes.Game.GameScene();
         Scenes.LevelSelect.LevelSelectScene SelectScene = new Scenes.LevelSelect.LevelSelectScene();
 
-        Scenes.Scene CurrentScene;
+        Scene CurrentScene;
 
         public Gardening()
         {
@@ -37,6 +37,10 @@ namespace GardeningGame.Engine
             //Graphics.PreferredBackBufferWidth = 1920;
             //Graphics.ToggleFullScreen();
             CurrentScene = SelectScene;
+
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += GameScene.OnSizeChanged;
+            Window.ClientSizeChanged += SelectScene.OnSizeChanged;
         }
 
         private void SetMultiSampling(object sender, PreparingDeviceSettingsEventArgs e)
@@ -100,7 +104,7 @@ namespace GardeningGame.Engine
             CurrentScene.LoadContent(Content);
             //if (Debug.DEBUG)
             //{
-                Debug.DebugFont = Content.Load<SpriteFont>("UI\\arial");
+                Scenes.Common.Debug.DebugFont = Content.Load<SpriteFont>("UI\\arial");
             //}
         }
 
@@ -124,7 +128,7 @@ namespace GardeningGame.Engine
             if (true)
             {
                 Scenes.Common.Camera.SpriteBatch.Begin();
-                Scenes.Common.Camera.SpriteBatch.DrawString(Debug.DebugFont, Delta.ToString(), new Vector2(100, 100), Color.DarkSalmon);
+                Scenes.Common.Camera.SpriteBatch.DrawString(Scenes.Common.Debug.DebugFont, Delta.ToString(), new Vector2(100, 100), Color.DarkSalmon);
                 Scenes.Common.Camera.SpriteBatch.End();
             }
 
@@ -142,7 +146,7 @@ namespace GardeningGame.Engine
 
             MouseState ms = Mouse.GetState();
 
-            CurrentScene.Update(gameTime, ms, KeyBoardState);
+            CurrentScene.Update(gameTime, ms, KeyBoardState, IsActive);
 
             if (Delta > 0)
                 Delta--;

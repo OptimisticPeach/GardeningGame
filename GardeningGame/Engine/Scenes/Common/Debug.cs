@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using System.IO;
 
-namespace GardeningGame.Engine.Scenes
+namespace GardeningGame.Engine.Scenes.Common
 {
     public static class Debug
     {
@@ -26,6 +27,11 @@ S_R:{8}
 E_H:{9}
 E_R:{10}
 E_R:{11}";
+        public static TextWriter DebugConsole;
         public static SpriteFont DebugFont;
+        static Debug()
+        {
+            DebugConsole = Console.Out;
+        }
     }
 }

@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{1CBC629B-9DAC-4B95-B9B6-77F2FF5088B0}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>GardeningGame</RootNamespace>
     <AssemblyName>GardeningGame</AssemblyName>
@@ -37,11 +37,10 @@
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>GardeningGame.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -66,18 +65,19 @@
   <ItemGroup>
     <Compile Include="Engine\DataLoader.cs" />
     <Compile Include="Engine\DataObjects\GameDataObject.cs" />
-    <Compile Include="Engine\GameEngine\Effects\PrimitiveEffect.cs" />
+    <Compile Include="Engine\GameEngine\EffectReloader\EffectReloader.cs" />
     <Compile Include="Engine\GameEngine\GameCam.cs" />
-    <Compile Include="Engine\GameEngine\PrimitiveEffect.cs" />
+    <Compile Include="Engine\GameEngine\Effects\PrimitiveEffect.cs" />
     <Compile Include="Engine\GameEngine\Terrain\DirtPatch.cs" />
     <Compile Include="Engine\GameEngine\Terrain\Terrain.cs" />
     <Compile Include="Engine\GameEngine\Terrain\Water.cs" />
     <None Include="Engine\GameEngine\Utilities\Camera.cs" />
+    <Compile Include="Engine\GameEngine\Terrain\WaterWithEffect.cs" />
     <Compile Include="Engine\GameEngine\Utilities\Vector3Serializable.cs" />
     <Compile Include="Engine\Scenes\Common\Debug.cs" />
     <Compile Include="Engine\Scenes\Common\Extensions.cs" />
     <Compile Include="Engine\Scenes\Common\Camera.cs" />
-    <Compile Include="Engine\Scenes\Common\Utils.cs" />
+    <Compile Include="Engine\GameEngine\Utilities\Utils.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameDraw.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameScene.cs" />
     <Compile Include="Engine\Scenes\GameScene\GameUpdate.cs" />
@@ -110,12 +110,13 @@
     <Compile Include="Engine\GameEngine\Utilities\VertexPositionColorNormal.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Extended, Version=1.0.617.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Extended.1.0.617\lib\portable-net45+win8+wpa81\MonoGame.Extended.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
+      <HintPath>Libs\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoGame.Framework.Content.Pipeline, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\MonoGame.Framework.Content.Pipeline.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>

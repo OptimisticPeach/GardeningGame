@@ -12,7 +12,6 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 using static GardeningGame.Engine.Scenes.Game.GameSceneVariables;
 using GardeningGame.Engine.Scenes.Common;
-using MonoGame.Extended;
 
 namespace GardeningGame.Engine.Scenes.LevelSelect
 {
@@ -84,8 +83,6 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
                 }
             }
 
-            Cam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
-
             SBBData = new Color[SelectionBackBuffer.Height * SelectionBackBuffer.Width];
         }
 
@@ -97,6 +94,11 @@ namespace GardeningGame.Engine.Scenes.LevelSelect
         public void SaveData()
         {
             //Do nothing
+        }
+
+        public void OnSizeChanged(object sender, EventArgs e)
+        {
+
         }
 
         /// <summary>

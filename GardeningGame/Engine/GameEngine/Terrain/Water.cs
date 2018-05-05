@@ -138,66 +138,6 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
 
             VertexBuffer.SetData(Vertices);
         }
-
-        public override void Draw(GraphicsDevice GD, Vector3 Position, bool UseID, Camera Cam)
-        {
-             Cam.PrimitivesEffect.World = Cam.worldMatrix * Matrix.CreateTranslation(Position);
-             Cam.PrimitivesEffect.View = Cam.viewMatrix;
-             Cam.PrimitivesEffect.Projection = Cam.projectionMatrix;
-
-            if (UseID)
-            {
-                 Cam.PrimitivesEffect.CurrentTechnique =  Cam.PrimitivesEffect.Techniques["BasicEffect"];
-                 Cam.PrimitivesEffect.LightingEnabled = false; // turn on the lighting subsystem
-
-                 Cam.PrimitivesEffect.VertexColorEnabled = false;
-
-                 Cam.PrimitivesEffect.DiffuseColor = ID.ToVector3(); //1, 1, 1 by default
-
-                 Cam.PrimitivesEffect.FogEnabled = false;
-            }
-            else
-            {
-                 Cam.PrimitivesEffect.CurrentTechnique =  Cam.PrimitivesEffect.Techniques["BasicEffect_VertexLighting_VertexColor"];
-                 Cam.PrimitivesEffect.EnableDefaultLighting();
-
-                 Cam.PrimitivesEffect.LightingEnabled = true; // turn on the lighting subsystem
-
-                 Cam.PrimitivesEffect.VertexColorEnabled = true;
-
-                 Cam.PrimitivesEffect.FogEnabled = true;
-
-                 Cam.PrimitivesEffect.FogColor = GameSceneVariables.clearColor.ToVector3();
-
-                 Cam.PrimitivesEffect.FogEnd = 3800;
-
-                 Cam.PrimitivesEffect.FogStart = 2000f;
-
-                 Cam.PrimitivesEffect.DirectionalLight0.SpecularColor = new Vector3(1);
-
-                 Cam.PrimitivesEffect.DirectionalLight0.Direction = new Vector3(-1, -1, -1);
-
-                 Cam.PrimitivesEffect.DirectionalLight0.Enabled = true;
-
-                 Cam.PrimitivesEffect.DiffuseColor = new Vector3(1); //1, 1, 1 by default
-            }
-
-            //Utils.PrimitivesEffect.AmbientLightColor = new Vector3(0, .25f, .75f);
-            //Utils.PrimitivesEffect.EmissiveColor = new Vector3(0, 0, 1);
-
-            //Utils.PrimitivesEffect.SpecularColor = new Vector3(0, .9f, 0.25f);
-
-            GD.SetVertexBuffer(VertexBuffer);
-
-            foreach (EffectPass pass in  Cam.PrimitivesEffect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                GD.DrawPrimitives(PrimitiveType.TriangleList, 0, VertexBuffer.VertexCount / 3);
-            }
-
-            GD.SetVertexBuffer(null);
-            GD.Indices = null;
-
-        }
+        
     }
 }

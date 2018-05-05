@@ -11,6 +11,7 @@ float4 DiffuseColor;
 float3 EmissiveColor;
 float3 SpecularColor;
 float  SpecularPower;
+float Time;
 
 
 // Vertex shader output structures.
@@ -118,7 +119,7 @@ VSOutput VSBasicVertexLightingVc(VSInputNmVc vin)
     VSOutput vout;
     
     CommonVSOutput cout = ComputeCommonVSOutputWithLighting(vin.Position, vin.Normal, 1);
-   vout.PositionPS = cout.Pos_ps;
+    vout.PositionPS = cout.Pos_ps;
     vout.Diffuse = cout.Diffuse;
     vout.Specular = float4(cout.Specular, cout.FogFactor);
     
@@ -134,13 +135,40 @@ float4 PSBasicVertexLighting(VSOutput pin) : SV_Target0
     AddSpecular(color, pin.Specular.rgb);
     ApplyFog(color, pin.Specular.w);
     
+    //color *= float4(2, 0.25, 0.125, 1);
+
+    if(color.z > (color.x + color.y) / 8)
+        color += float4(0.1, 0, 0, 0);
+
+    if((int)Time % 2 == 0)
+        color.x = 1 - (Time % 1);
+    else
+    {
+        color.x = Time % 1;
+    }
+    // color.x = (sin(Time * 3) + 1) / 2;
+
     return color;
 }
-Technique PrimitiveEffect
+
+float4 SimplePS(float4 pos : SV_POSITION) : SV_Target0
+{
+    float4 DiffColor = DiffuseColor;
+    return DiffColor;
+}
+
+Technique Colored
 {
     pass
     {
         VertexShader = compile vs_4_0_level_9_1 VSBasicVertexLightingVc();
         PixelShader  = compile ps_4_0_level_9_1 PSBasicVertexLighting();
+    }
+}
+Technique Plain
+{
+    pass
+    {
+        PixelShader = compile ps_4_0_level_9_1 SimplePS();
     }
 }

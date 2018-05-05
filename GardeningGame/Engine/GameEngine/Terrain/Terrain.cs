@@ -31,31 +31,29 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
         /// </summary>
         /// <param name="GD"> The graphics device to be drawn to </param>
         /// <param name="Position"> A position for the terrain </param>
-        public virtual void Draw(GraphicsDevice GD, Vector3 Position, bool UseID, Camera Cam)
+        public virtual void Draw(GraphicsDevice GD, Vector3 Position, bool UseID, PrimitiveEffect PEffect, Camera Cam)
         {
-            Cam.PrimitivesEffect.World = Cam.worldMatrix * Matrix.CreateTranslation(Position);
-            Cam.PrimitivesEffect.View = Cam.viewMatrix;
-            Cam.PrimitivesEffect.Projection = Cam.projectionMatrix;
+            PEffect.World = Cam.worldMatrix * Matrix.CreateTranslation(Position);
+            PEffect.View = Cam.viewMatrix;
+            PEffect.Projection = Cam.projectionMatrix;
 
             if (UseID)
             {
-                Cam.PrimitivesEffect.CurrentTechnique = Cam.PrimitivesEffect.Techniques["BasicEffect"];
-                Cam.PrimitivesEffect.LightingEnabled = false; // turn on the lighting subsystem
-                Cam.PrimitivesEffect.FogEnabled = false;
-                Cam.PrimitivesEffect.VertexColorEnabled = false;
-                Cam.PrimitivesEffect.DiffuseColor = ID.ToVector3(); //1, 1, 1 by default
+                PEffect.InternalEffect.CurrentTechnique = PEffect.InternalEffect.Techniques["Plain"];
+                PEffect.DiffuseColor = ID.ToVector4(); //1, 1, 1 by default
             }
             else
             {
-                Cam.PrimitivesEffect.CurrentTechnique = Cam.PrimitivesEffect.Techniques["BasicEffect_VertexLighting_VertexColor"];
-                Cam.PrimitivesEffect.EnableDefaultLighting();
-
-                Cam.PrimitivesEffect.LightingEnabled = true; // turn on the lighting subsystem
-
-                Cam.PrimitivesEffect.VertexColorEnabled = true;
-
-                Cam.PrimitivesEffect.DiffuseColor = new Vector3(1); //1, 1, 1 by default
+                PEffect.InternalEffect.CurrentTechnique = PEffect.InternalEffect.Techniques["Colored"];
+                //PEffect.DiffuseColor = new Vector4(0.35f, 0.35f, 0.35f, 1); //1, 1, 1 by default
+                PEffect.DiffuseColor = new Vector4(0.192f, 0.192f, 0.192f, 1); //1, 1, 1 by default
+                PEffect.LightSpecularColor = new Vector3(0f);
+                PEffect.SpecularColor = new Vector3(1f);
+                PEffect.SpecularPower = 0.14f;
+                PEffect.LightDirection = new Vector3(1, .71f, 1);
+                PEffect.EmissiveColor = new Vector3(0.125f);
             }
+
 
             //Utils.PrimitivesEffect.AmbientLightColor = new Vector3(0, .25f, .75f);
             //Utils.PrimitivesEffect.EmissiveColor = new Vector3(0, 0, 1);
@@ -64,7 +62,7 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
 
             GD.SetVertexBuffer(VertexBuffer);
 
-            foreach (EffectPass pass in Cam.PrimitivesEffect.CurrentTechnique.Passes)
+            foreach (EffectPass pass in PEffect.InternalEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 GD.DrawPrimitives(PrimitiveType.TriangleList, 0, VertexBuffer.VertexCount / 3);

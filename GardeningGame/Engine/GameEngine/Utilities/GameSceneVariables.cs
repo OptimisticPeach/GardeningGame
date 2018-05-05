@@ -28,17 +28,5 @@ namespace GardeningGame.Engine.Scenes.Game
 
         public const float WaveFactor = 0.06f;
         public static readonly Color clearColor = Color.AliceBlue;
-        public static Color AccentColor { get; private set; }
-        
-        static GameSceneVariables()
-        {
-            AccentColor = Utils.GetAccent();
-            System.Windows.SystemParameters.StaticPropertyChanged += UpdateColour;
-        }
-
-        private static void UpdateColour(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            AccentColor = Utils.GetAccent();
-        }
     }
 }

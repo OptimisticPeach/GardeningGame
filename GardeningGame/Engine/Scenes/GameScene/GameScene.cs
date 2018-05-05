@@ -32,8 +32,6 @@ namespace GardeningGame.Engine.Scenes.Game
 
         PlantTile[,] Tiles;
 
-        Effect PEffect;
-
         Terrain.Water Water;
 
         UI.SwingingSelector Selector;
@@ -44,9 +42,13 @@ namespace GardeningGame.Engine.Scenes.Game
 
         GameCam Cam = new GameCam();
 
+        EffectReloader EffectReloader;
+
         Dictionary<string, List<Model>> OrderedModels = new Dictionary<string, List<Model>>();
 
         public bool ContentLoaded { get; set; }
+
+        bool Initialized;
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -67,19 +69,7 @@ namespace GardeningGame.Engine.Scenes.Game
 
             PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
 
-
-            SelectionBackBuffer = new RenderTarget2D(Graphics.GraphicsDevice,
-                Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
-                Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight,
-                false,
-                SurfaceFormat.Color,
-                DepthFormat.Depth24Stencil8);
-            ScreenBackBuffer = new RenderTarget2D(Graphics.GraphicsDevice,
-                Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
-                Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight,
-                false,
-                SurfaceFormat.Color,
-                DepthFormat.Depth24Stencil8);
+            InitGraphics(true);
 
             LoadData();
 
@@ -131,15 +121,48 @@ namespace GardeningGame.Engine.Scenes.Game
 
             //IsFixedTimeStep = false;
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
+            Console.Write(Directory.GetCurrentDirectory());
+            EffectReloader = new EffectReloader(@"..\..\..\..\Content", @"PrimitivesEffect.fx", GD.GraphicsDevice);
+            EffectReloader.OnEffectChanged += onPrimitivesEffectChanged;
 
-            Cam.Initialize(Graphics.GraphicsDevice, 1200, 800, false, 1400);
+            Initialized = true;
+        }
 
-            Graphics.GraphicsDevice.Clear(clearColor);
+        public void onPrimitivesEffectChanged(Effect E)
+        {
+            Cam.PEffect.InternalEffect = E;
+        }
 
-            Graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+        public void InitGraphics(bool? Override)
+        {
+            if (Override.HasValue ? Override.Value : false || Initialized)
+            {
+                Cam.Initialize(Graphics.GraphicsDevice, 1200, 800, false, 1400);
 
-            OnRequestedSceneChanged += GameScene_OnRequestedSceneChanged;
-            Cam.PrimitivesEffect = new BasicEffect(Graphics.GraphicsDevice);
+                Graphics.GraphicsDevice.Clear(clearColor);
+
+                Graphics.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+
+                OnRequestedSceneChanged += GameScene_OnRequestedSceneChanged;
+
+                SelectionBackBuffer = new RenderTarget2D(Graphics.GraphicsDevice,
+                    Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
+                    Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight,
+                    false,
+                    SurfaceFormat.Color,
+                    DepthFormat.Depth24Stencil8);
+                ScreenBackBuffer = new RenderTarget2D(Graphics.GraphicsDevice,
+                    Graphics.GraphicsDevice.PresentationParameters.BackBufferWidth,
+                    Graphics.GraphicsDevice.PresentationParameters.BackBufferHeight,
+                    false,
+                    SurfaceFormat.Color,
+                    DepthFormat.Depth24Stencil8);
+            }
+        }
+
+        public void OnSizeChanged(object sender, EventArgs e)
+        {
+            InitGraphics(null);
         }
 
         private void GameScene_OnRequestedSceneChanged(Scene Sender, SceneType TypeToSwitchTo, EventArgs args)
@@ -227,8 +250,12 @@ namespace GardeningGame.Engine.Scenes.Game
             Entities.Shrub.Sprite = Content.Load<Texture2D>(@"GUI\Shrub");
             Entities.FlowerBush.Sprite = Content.Load<Texture2D>(@"GUI\FlowerBush");
 
-            PEffect = Content.Load<Effect>("PrimitivesEffect");
             ContentLoaded = true;
+
+            Cam.PEffect = new PrimitiveEffect()
+            {
+                InternalEffect = Content.Load<Effect>("PrimitivesEffect")
+            };
         }
 
         public DataObjects.GameDataObject GetGameDataObject()
