@@ -16,13 +16,6 @@ cbuffer Data : register(b0)
     float Time;
 };
 
-const float WaveFactor = 0.2;
-const float WaveLength = 17.0;
-
-const float PI = 3.14159265358979323;
-const float TAU = 2 * 3.14159265358979323846264338327950;
-const float TwoThirdsPI = 2.094395102393195492308428922186;
-
 // Vertex shader output structures.
 
 struct VSOutput
@@ -130,7 +123,7 @@ float4 permute(float4 x)
 }
 
 //
-// Description : GLSL 2D simplex noise function
+// Description : GLSL 3D simplex noise function
 //      Author : Ian McEwan, Ashima Arts
 //  Maintainer : ijm
 //     Lastmod : 20110822 (ijm)
@@ -244,31 +237,6 @@ CommonVSOutput ComputeCommonVSOutputWithLighting(float4 position, float3 normal,
     return vout;
 }
 
-float generateOffset(float x, float z, float val1, float val2)
-{
-    float radiansX = ((((x + z * x * val1) % WaveLength) / WaveLength) + Time * ((x * 0.8 + z) % 1.5)) * PI;
-    float radiansZ = ((((val2 * (z * x + x * z)) % WaveLength) / WaveLength) + Time * 2.0 * (x % 2.0)) * PI;
-    return WaveFactor * 0.5 * (sin(radiansZ) + cos(radiansX));
-}
-
-float genOffset(float g)
-{
-    float thetaPlusG = g + Time;
-    float Contents = thetaPlusG * TwoThirdsPI;
-    float Sine = sin(Contents);
-    float Cosine = cos(Contents);
-    float Tangent = tan(Sine + Cosine);
-    return thetaPlusG + Tangent * Time;
-}
-
-float3 applyDistortion(float3 vertex)
-{
-    float xDistortion = generateOffset(vertex.x, vertex.z, 1,1);
-    float yDistortion = generateOffset(vertex.x, vertex.z, 1,1);
-    float zDistortion = generateOffset(vertex.x, vertex.z, 1,1);
-    return float3(xDistortion, yDistortion, zDistortion);
-}
-
 [maxvertexcount(3)]
 void GeometryShader_(triangle GSInput input[3], inout TriangleStream<GSOutput> outstream)
 {
@@ -313,18 +281,10 @@ VSOutput VertexShader_(VSInput input)
     VSOutput r;
     r.Position = input.Position;
 
-    //r.Position = input.Position;
-
     r.Color = input.Color;
-    //float noisevalx = snoise(float3(input.Position.xz, -Time));
     float noisevaly = snoise(float3(input.Position.xz / 20, Time * 2));
     float noisevalx = snoise(float3(input.Position.xz / 25, Time * 5));
     float noisevalz = snoise(float3(input.Position.zx / 22.5, Time * 5));
-    //float noisevalz = snoise(float3(input.Position.zx, Time));
-
-    //float noise = noiseFunc(float3(input.Position.xz, Time)) * 30;
-    
-    //noise = normalize(noise);
 
     r.Position += float4(noisevalx, noisevaly + 10, noisevalz, 0) * 10;
     
