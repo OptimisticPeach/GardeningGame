@@ -300,6 +300,125 @@ namespace GardeningGame.Engine.Scenes.Common
             return result;
         }
 
+        /// <summary>
+        /// Generates a list of triangles for use with the water effect
+        /// </summary>
+        /// <param name="Colors">A list of colors to use that will be randomly selected from the array.</param>
+        /// <param name="Depth">Depth of the terrain</param>
+        /// <param name="Width">Width of the terrain</param>
+        /// <returns></returns>
+        public static IEnumerable<VertexPositionColor_Vector4> getTrisAlternatingForEff(Color[] Colors, int Depth, int Width, float PointSpacing)
+        {
+            Vector4[,] colours = new Vector4[Depth + 1, Width + 1];
+            for (int i = 0; i != Depth + 1; i++)
+                for (int j = 0; j != Width + 1; j++)
+                    colours[i, j] = Colors[RNG.Next(Colors.Length)].ToVector4();
+            for (int i = 0; i < Depth; i++) //I is Y axis
+            {
+                for (int j = 0; j < Width; j++) //J is X axis
+                {
+                    if ((i + j) % 2 == 0)
+                    {
+                        var a = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, j * PointSpacing), colours[i, j]);
+                        var b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, j * PointSpacing), colours[i + 1, j]);
+                        var c = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, (j + 1) * PointSpacing), colours[i + 1, j + 1]);
+
+                        yield return (a);
+                        yield return (b);
+                        yield return (c);
+
+                        b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, (j + 1) * PointSpacing), colours[i + 1, j + 1]);
+                        c = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, (j + 1) * PointSpacing), colours[i, j + 1]);
+
+                        yield return (a);
+                        yield return (b);
+                        yield return (c);
+                    }
+                    else
+                    {
+                        var a = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, j * PointSpacing), colours[i, j]);
+                        var b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, j * PointSpacing), colours[i + 1, j]);
+                        var c = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, (j + 1) * PointSpacing), colours[i, j + 1]);
+
+                        yield return (a);
+                        yield return (b);
+                        yield return (c);
+
+                        a = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, j * PointSpacing), colours[i + 1, j]);
+                        b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, (j + 1) * PointSpacing), colours[i + 1, j + 1]);
+
+                        yield return (a);
+                        yield return (b);
+                        yield return (c);
+
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Generates a list of triangles for use with the water effect
+        /// </summary>
+        /// <param name="Colors">A list of colors to use that will be randomly selected from the array.</param>
+        /// <param name="Depth">Depth of the terrain</param>
+        /// <param name="Width">Width of the terrain</param>
+        /// <returns></returns>
+        public static IEnumerable<VertexPositionColor_Vector4> getTrisAlternatingForEffInCircle(Color[] Colors, int Depth, int Width, float PointSpacing, float Radius, Color ClearColor)
+        {
+            Vector4[,] colours = new Vector4[Depth + 1, Width + 1];
+            for (int i = 0; i != Depth + 1; i++)
+                for (int j = 0; j != Width + 1; j++)
+                    if (Vector2.Distance(new Vector2(Depth / 2 * PointSpacing, Width / 2 * PointSpacing), new Vector2(i * PointSpacing, j * PointSpacing)) <= Radius - 100)
+                        colours[i, j] = Colors[RNG.Next(Colors.Length)].ToVector4();
+                    else
+                    {
+                        colours[i, j] = ClearColor.ToVector4();
+                        colours[i, j].W = 0/255f;
+                    }
+            for (int i = 0; i < Depth; i++) //I is Y axis
+            {
+                for (int j = 0; j < Width; j++) //J is X axis
+                {
+                    if (Vector2.Distance(new Vector2(Depth / 2 * PointSpacing, Width / 2 * PointSpacing), new Vector2(i * PointSpacing, j * PointSpacing)) <= Radius)
+                        if ((i + j) % 2 == 0)
+                        {
+                            var a = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, j * PointSpacing), colours[i, j]);
+                            var b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, j * PointSpacing), colours[i + 1, j]);
+                            var c = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, (j + 1) * PointSpacing), colours[i + 1, j + 1]);
+
+                            yield return (a);
+                            yield return (b);
+                            yield return (c);
+
+                            b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, (j + 1) * PointSpacing), colours[i + 1, j + 1]);
+                            c = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, (j + 1) * PointSpacing), colours[i, j + 1]);
+
+                            yield return (a);
+                            yield return (b);
+                            yield return (c);
+                        }
+                        else
+                        {
+                            var a = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, j * PointSpacing), colours[i, j]);
+                            var b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, j * PointSpacing), colours[i + 1, j]);
+                            var c = new VertexPositionColor_Vector4(new Vector3(i * PointSpacing, 0, (j + 1) * PointSpacing), colours[i, j + 1]);
+
+                            yield return (a);
+                            yield return (b);
+                            yield return (c);
+
+                            a = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, j * PointSpacing), colours[i + 1, j]);
+                            b = new VertexPositionColor_Vector4(new Vector3((i + 1) * PointSpacing, 0, (j + 1) * PointSpacing), colours[i + 1, j + 1]);
+
+                            yield return (a);
+                            yield return (b);
+                            yield return (c);
+
+                        }
+                }
+            }
+        }
+
         public static Color getColorAt(Texture2D texture, int x, int y)
         {
             Color[] temp = new Color[1];
@@ -371,7 +490,8 @@ namespace GardeningGame.Engine.Scenes.Common
             }
 
             Colours = new int[]
-            {2, 9, 20, 21, 22, 36, 39, 41, 134, 87, 96, 129};
+            //{2, 9, 20, 21, 22, 36, 39, 41, 134, 87, 96, 129};
+            {129, 39, 41};
 
             BlueishColours = new Color[Colours.Length];
 

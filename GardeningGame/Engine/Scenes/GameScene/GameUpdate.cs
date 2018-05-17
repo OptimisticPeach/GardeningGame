@@ -184,7 +184,7 @@ namespace GardeningGame.Engine.Scenes.Game
                     Selector = null;
                 }
             }
-            Water.Update(Graphics.GraphicsDevice, GSV, GT, MS, KS);
+            //Water.Update(Graphics.GraphicsDevice, GSV, GT, MS, KS);
 
             PreviousMouseState2 = PreviousMouseState;
             PreviousMouseState = MS;

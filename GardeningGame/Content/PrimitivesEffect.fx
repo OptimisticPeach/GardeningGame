@@ -13,6 +13,7 @@ float3 SpecularColor;
 float  SpecularPower;
 float Time;
 
+const float root_two = 1.41421356237;
 
 // Vertex shader output structures.
 
@@ -137,17 +138,22 @@ float4 PSBasicVertexLighting(VSOutput pin) : SV_Target0
     
     //color *= float4(2, 0.25, 0.125, 1);
 
-    if(color.z > (color.x + color.y) / 8)
-        color += float4(0.1, 0, 0, 0);
+    // if(color.z > (color.x + color.y) / 8)
+    //     color += float4(0.1, 0, 0, 0);
 
-    if((int)Time % 2 == 0)
-        color.x = 1 - (Time % 1);
-    else
-    {
-        color.x = Time % 1;
-    }
-    // color.x = (sin(Time * 3) + 1) / 2;
-
+    // if((int)Time % 2 == 0)
+    //     color.x = 1 - (Time % 1);
+    // else
+    // {
+    //     color.x = Time % 1;
+    // }
+    // float3 oldColor = color.xyz;
+    // //color.x = ((sin(Time * 3) + 1) / 2);
+    // //color.y = ((cos(Time * 3) + 1) / 2);
+    // color.z = abs(((sin(Time * 3) + cos(Time * 3)) + root_two) * 2) / root_two;
+    // color.xyz += oldColor;
+    color *= root_two;
+    normalize(color);
     return color;
 }
 
@@ -161,14 +167,14 @@ Technique Colored
 {
     pass
     {
-        VertexShader = compile vs_4_0_level_9_1 VSBasicVertexLightingVc();
-        PixelShader  = compile ps_4_0_level_9_1 PSBasicVertexLighting();
+        VertexShader = compile vs_4_1 VSBasicVertexLightingVc();
+        PixelShader  = compile ps_4_1 PSBasicVertexLighting();
     }
 }
 Technique Plain
 {
     pass
     {
-        PixelShader = compile ps_4_0_level_9_1 SimplePS();
+        PixelShader = compile ps_4_1 SimplePS();
     }
 }

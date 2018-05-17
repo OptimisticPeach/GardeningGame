@@ -81,7 +81,7 @@ namespace GardeningGame.Engine.Scenes.Game
                 if(pt != null)
                 pt.Terrain.Draw(Graphics.GraphicsDevice, pt.Position, true, Cam.PEffect, Cam);
             }
-            Water.Draw(Graphics.GraphicsDevice, new Vector3(0), true, Cam.PEffect, Cam);
+            //Water.Draw(Graphics.GraphicsDevice, new Vector3(0), true, Cam.PEffect, Cam);
 
             Graphics.GraphicsDevice.SetRenderTarget(null);
         }
@@ -126,8 +126,8 @@ namespace GardeningGame.Engine.Scenes.Game
                 }
 
             }
-            Water.Draw(Graphics.GraphicsDevice, new Vector3(0), false, Cam.PEffect, Cam);
-
+            //Water.Draw(Graphics.GraphicsDevice, new Vector3(0), false, Cam.PEffect, Cam);
+            WaterWithEffect.DrawWithWaterEffect(Graphics.GraphicsDevice, new Vector3(0, -180, 0), false, WEffect, Cam);
             Graphics.GraphicsDevice.SetRenderTarget(null);
         }
 

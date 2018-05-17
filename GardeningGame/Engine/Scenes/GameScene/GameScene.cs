@@ -34,6 +34,9 @@ namespace GardeningGame.Engine.Scenes.Game
 
         Terrain.Water Water;
 
+        Terrain.WaterWithEffect WaterWithEffect = new Terrain.WaterWithEffect();
+        WaterEffect WEffect;
+
         UI.SwingingSelector Selector;
 
         UI.Elements.HelpButton HelpButton = new UI.Elements.HelpButton();
@@ -115,15 +118,17 @@ namespace GardeningGame.Engine.Scenes.Game
 
             Water.Update(Graphics.GraphicsDevice, GSV, null, null, null);
 
+            //WaterWithEffect.Generate()
+
             HelpButton.Position = new Point(0);
 
             HelpButton.Scale = 1;
 
-            //IsFixedTimeStep = false;
-            //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 100.0f);
-            Console.Write(Directory.GetCurrentDirectory());
             EffectReloader = new EffectReloader(@"..\..\..\..\Content", @"PrimitivesEffect.fx", GD.GraphicsDevice);
             EffectReloader.OnEffectChanged += onPrimitivesEffectChanged;
+
+            WEffect.InitShaders(@"Effects\WaterShader.fx", Graphics.GraphicsDevice);
+            WaterWithEffect.GenerateCircle(GSV.WaterSize, GSV.WaterSize, GSV.WaterPointSpacing, GSV.WaterRadius, Graphics.GraphicsDevice);
 
             Initialized = true;
         }
@@ -255,6 +260,11 @@ namespace GardeningGame.Engine.Scenes.Game
             Cam.PEffect = new PrimitiveEffect()
             {
                 InternalEffect = Content.Load<Effect>("PrimitivesEffect")
+            };
+
+            WEffect = new WaterEffect()
+            {
+                InternalEffect = Content.Load<Effect>("WaterShader")
             };
         }
 

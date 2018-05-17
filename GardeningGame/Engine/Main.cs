@@ -31,8 +31,8 @@ namespace GardeningGame.Engine
         {
             Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            Graphics.PreparingDeviceSettings += SetMultiSampling;
             Graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            
             //Graphics.PreferredBackBufferHeight = 1080;
             //Graphics.PreferredBackBufferWidth = 1920;
             //Graphics.ToggleFullScreen();
@@ -43,11 +43,11 @@ namespace GardeningGame.Engine
             Window.ClientSizeChanged += SelectScene.OnSizeChanged;
         }
 
-        private void SetMultiSampling(object sender, PreparingDeviceSettingsEventArgs e)
-        {
-            var pp = e.GraphicsDeviceInformation.PresentationParameters;
-            pp.MultiSampleCount = 8;
-        }
+        //private void SetMultiSampling(object sender, PreparingDeviceSettingsEventArgs e)
+        //{
+        //    var pp = e.GraphicsDeviceInformation.PresentationParameters;
+        //    pp.MultiSampleCount = 8;
+        //}
 
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.

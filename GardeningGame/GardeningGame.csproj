@@ -66,6 +66,7 @@
     <Compile Include="Engine\DataLoader.cs" />
     <Compile Include="Engine\DataObjects\GameDataObject.cs" />
     <Compile Include="Engine\GameEngine\EffectReloader\EffectReloader.cs" />
+    <Compile Include="Engine\GameEngine\Effects\WaterEffect.cs" />
     <Compile Include="Engine\GameEngine\GameCam.cs" />
     <Compile Include="Engine\GameEngine\Effects\PrimitiveEffect.cs" />
     <Compile Include="Engine\GameEngine\Terrain\DirtPatch.cs" />
@@ -74,6 +75,7 @@
     <None Include="Engine\GameEngine\Utilities\Camera.cs" />
     <Compile Include="Engine\GameEngine\Terrain\WaterWithEffect.cs" />
     <Compile Include="Engine\GameEngine\Utilities\Vector3Serializable.cs" />
+    <Compile Include="Engine\GameEngine\Utilities\VertexPosColour_Vec4.cs" />
     <Compile Include="Engine\Scenes\Common\Debug.cs" />
     <Compile Include="Engine\Scenes\Common\Extensions.cs" />
     <Compile Include="Engine\Scenes\Common\Camera.cs" />
@@ -101,7 +103,7 @@
     <Compile Include="Engine\GameEngine\Entities\Entity.cs" />
     <Compile Include="Engine\GameEngine\Entities\Flower.cs" />
     <Compile Include="Engine\GameEngine\Entities\Shrub.cs" />
-    <Compile Include="Engine\GameEngine\Utilities\DeprecatedUtilities.cs" />
+    <Compile Include="Engine\Deprecated\DeprecatedUtilities.cs" />
     <Compile Include="Engine\GameEngine\Utilities\GameSceneVariables.cs" />
     <Compile Include="Engine\GameEngine\Utilities\MeshTag.cs" />
     <Compile Include="Engine\GameEngine\PlantTile.cs" />
@@ -123,12 +125,31 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="SharpDX, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Testing Project\Libs\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Testing Project\Libs\SharpDX.D3DCompiler.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Testing Project\Libs\SharpDX.Direct3D11.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Testing Project\Libs\SharpDX.DXGI.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\UI\NotFound.png" />
+    <None Include="Effects\WaterShader.fx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
