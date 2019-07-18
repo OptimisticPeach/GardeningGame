@@ -1,6 +1,4 @@
-﻿
-
-cbuffer Data : register(b0)
+﻿cbuffer Data : register(b0)
 {
     float4x4 World;
     float4x4 WorldViewProj;
@@ -244,7 +242,7 @@ void GeometryShader_(triangle GSInput input[3], inout TriangleStream<GSOutput> o
     float3 v2 = input[2].Position.xyz - input[0].Position.xyz;
     float3 normal = cross(v1, v2);
 
-    normalize(normal);
+    normalize(normal); 
 
     GSOutput output;
 

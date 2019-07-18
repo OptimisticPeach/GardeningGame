@@ -42,32 +42,45 @@ namespace GardeningGame.Engine.Scenes.Game
         {
             if (e.Name == FileName)
             {
-                MonoGame.Framework.Content.Pipeline.Builder.PipelineManager PM = new MonoGame.Framework.Content.Pipeline.Builder.PipelineManager(Path, Path + "\\tempBin", "Path\\tempBin");
+                MonoGame.Framework.Content.Pipeline.Builder.PipelineManager PM = new MonoGame.Framework.Content.Pipeline.Builder.PipelineManager(Path, ".\\tempBin", ".\\tempDir");
                 bool Worked = false;
+                string DebugStream = "";
                 while (!Worked)
                     try
                     {
                         var BuiltContent = PM.BuildContent(Path + "\\" + FileName);
+                        DebugStream += "BuildContent - Okay\n";
                         var ProcessedContent = PM.ProcessContent(BuiltContent);
+                        DebugStream += "ProcessContent - Okay\n";
                         OnEffectChanged?.Invoke(new Effect(Device, ((CompiledEffectContent)ProcessedContent).GetEffectCode()));
+                        DebugStream += "Invoked Creation - Okay\n";
                         Worked = true;
-                        File.Delete(Path + "\\tempBin\\" + FileName.TrimEnd(".fx".ToArray()) + ".xnb");
+                        File.Delete(".\\tempBin\\" + FileName.TrimEnd(".fx".ToArray()) + ".xnb");
+                        DebugStream += "Deleted File - Okay\n";
                     }
                     catch (InvalidContentException E)
                     {
-                        Common.Debug.DebugConsole?.Write("CompilerException");
-                        Common.Debug.DebugConsole?.Write(E.Message);
+                        Common.Debug.DebugConsole?.WriteLine("CompilerException");
+                        Common.Debug.DebugConsole?.WriteLine(E.Message);
+                        Common.Debug.DebugConsole?.WriteLine("Debug message: \n" + DebugStream);
                         Worked = true;
                     }
                     catch (IOException E)
                     {
-                        Common.Debug.DebugConsole?.Write("Most likely a leftover file when exiting. Check .\\tempBin");
-                        Common.Debug.DebugConsole?.Write(E.Message);
+                        Common.Debug.DebugConsole?.WriteLine("Most likely a leftover file when exiting. Check .\\tempBin");
+                        Common.Debug.DebugConsole?.WriteLine(E.Message);
+                        Common.Debug.DebugConsole?.WriteLine("Debug message: \n" + DebugStream);
                         continue;
                     }
+                    catch (PipelineException E)
+                    {
+                        Common.Debug.DebugConsole?.WriteLine("Pipeline exception!");
+                        Common.Debug.DebugConsole?.WriteLine(E.Message);
+                    } 
                     catch (Exception E)
                     {
-                        Common.Debug.DebugConsole?.Write(E.Message);
+                        Common.Debug.DebugConsole?.WriteLine(E.Message);
+                        Common.Debug.DebugConsole?.WriteLine("Debug message: \n" + DebugStream);
                         continue;
                     }
             }

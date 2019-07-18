@@ -23,7 +23,6 @@ namespace GardeningGame.Engine
         GraphicsDeviceManager Graphics;
 
         Scenes.Game.GameScene GameScene = new Scenes.Game.GameScene();
-        Scenes.LevelSelect.LevelSelectScene SelectScene = new Scenes.LevelSelect.LevelSelectScene();
 
         Scene CurrentScene;
 
@@ -36,11 +35,10 @@ namespace GardeningGame.Engine
             //Graphics.PreferredBackBufferHeight = 1080;
             //Graphics.PreferredBackBufferWidth = 1920;
             //Graphics.ToggleFullScreen();
-            CurrentScene = SelectScene;
 
             Window.AllowUserResizing = true;
             Window.ClientSizeChanged += GameScene.OnSizeChanged;
-            Window.ClientSizeChanged += SelectScene.OnSizeChanged;
+            CurrentScene = GameScene;
         }
 
         //private void SetMultiSampling(object sender, PreparingDeviceSettingsEventArgs e)
@@ -61,39 +59,10 @@ namespace GardeningGame.Engine
 
             IsMouseVisible = true;
 
-            GameScene.OnRequestedSceneChanged += ChangeScene;
-            SelectScene.OnRequestedSceneChanged += ChangeScene;
-
             CurrentScene.Initialize(Graphics);
         }
 
         float Delta = 0;
-
-        public void ChangeScene (Scene Sender, SceneType TypeToSwitchTo, EventArgs args)
-        {
-            if (Delta <= 0)
-            {
-                switch (TypeToSwitchTo)
-                {
-                    case SceneType.Game:
-                        CurrentScene = GameScene;
-                        if (!CurrentScene.ContentLoaded)
-                            CurrentScene.LoadContent(Content);
-                        CurrentScene.Initialize(Graphics);
-                        break;
-                    case SceneType.LevelSelect:
-                        SelectScene = null;
-                        SelectScene = new Scenes.LevelSelect.LevelSelectScene();
-                        SelectScene.OnRequestedSceneChanged += ChangeScene;
-                        CurrentScene = SelectScene;
-                        if (!CurrentScene.ContentLoaded)
-                            CurrentScene.LoadContent(Content);
-                        CurrentScene.Initialize(Graphics);
-                        break;
-                }
-                Delta = 10f;
-            }
-        }
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -102,10 +71,6 @@ namespace GardeningGame.Engine
         protected override void LoadContent()
         {
             CurrentScene.LoadContent(Content);
-            //if (Debug.DEBUG)
-            //{
-                Scenes.Common.Debug.DebugFont = Content.Load<SpriteFont>("UI\\arial");
-            //}
         }
 
         /// <summary>
@@ -124,13 +89,6 @@ namespace GardeningGame.Engine
         protected override void Draw(GameTime gameTime)
         {
             CurrentScene.Draw(gameTime);
-
-            if (true)
-            {
-                Scenes.Common.Camera.SpriteBatch.Begin();
-                Scenes.Common.Camera.SpriteBatch.DrawString(Scenes.Common.Debug.DebugFont, Delta.ToString(), new Vector2(100, 100), Color.DarkSalmon);
-                Scenes.Common.Camera.SpriteBatch.End();
-            }
 
             base.Draw(gameTime);
         }

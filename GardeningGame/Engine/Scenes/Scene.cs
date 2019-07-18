@@ -21,14 +21,10 @@ namespace GardeningGame.Engine.Scenes
 
     public interface Scene
     {
-        bool ContentLoaded { get; set; }
         void Draw(GameTime GT);
         void Update(GameTime GT, MouseState MS, KeyboardState KS, bool IsActive);
         void LoadContent(ContentManager Content);
         void Initialize(GraphicsDeviceManager GD);
-        void SaveData();
-        void LoadData();
         void OnSizeChanged(object sender, EventArgs e);
-        event SceneChangeHandler OnRequestedSceneChanged;
     }
 }

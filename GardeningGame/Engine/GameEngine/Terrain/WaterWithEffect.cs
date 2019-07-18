@@ -49,7 +49,7 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
                 ((Device)GD.Handle).ImmediateContext.GeometryShader.Set(WEffect.GS);
                 ((Device)GD.Handle).ImmediateContext.PixelShader.Set(WEffect.PS);
                 ((Device)GD.Handle).ImmediateContext.VertexShader.Set(WEffect.VS);
-                
+
                 Buffer[] vsBuffers = WEffect.InternalEffect.ConstantBuffers.Select((a) => a._cbuffer).ToArray();
                 if (vsBuffers != null)
                 {
@@ -61,7 +61,7 @@ namespace GardeningGame.Engine.Scenes.Game.Terrain
                     }
                 }
                 else
-                    throw new Exception() ;
+                    throw new Exception();
                 GD.DrawPrimitives(PrimitiveType.TriangleList, 0, VertexBuffer.VertexCount / 3);
                 ((Device)GD.Handle).ImmediateContext.GeometryShader.Set(null);
 

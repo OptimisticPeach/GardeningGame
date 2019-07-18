@@ -15,12 +15,12 @@ namespace GardeningGame.Engine.Scenes.Game
         public int TerrainWidth = 10;
         public int TerrainDepth = 10;
         public int TerrainPointSpacing = 57;
-        public int WaterSize = 10;
-        public int WaterPointSpacing = 81;
+        public int WaterSize = 60;
+        public int WaterPointSpacing = 40;
         public int TotalWaterSize => WaterSize * WaterPointSpacing;
         public int PlantTileCountX = 3;
         public int PlantTileCountY = 3;
-        public float WaterRadius = 2500;
+        public float WaterRadius = 1000;
         public int spacingX => TerrainWidth * TerrainPointSpacing;
         public int spacingY => TerrainDepth * TerrainPointSpacing;
         #endregion

@@ -10,6 +10,5 @@ namespace GardeningGame.Engine.DataObjects
     public class GameDataObject
     {
         public Scenes.Game.GameSceneVariables GameSceneVariables;
-        public Scenes.Game.MockPlantTile[,] Tiles;
     }
 }
